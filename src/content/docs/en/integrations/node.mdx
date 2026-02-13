@@ -1,0 +1,48 @@
+---
+title: Node.js integration (fetch)
+---
+
+This is the most version-proof way: plain HTTP with `fetch`.
+
+Requirements:
+- `OPENAI_API_KEY` env var (your su8 codes key)
+- Node.js 18+ (built-in `fetch`)
+
+## Minimal runnable example
+
+```js
+// node.mjs
+const baseURL = 'https://su8.codes/codex/v1';
+const apiKey = process.env.OPENAI_API_KEY;
+
+if (!apiKey) throw new Error('Missing OPENAI_API_KEY');
+
+async function main() {
+  const resp = await fetch(`${baseURL}/responses`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${apiKey}`
+    },
+    body: JSON.stringify({
+      model: 'gpt-5.2',
+      input: [
+        {
+          type: 'message',
+          role: 'user',
+          content: [{ type: 'input_text', text: 'Hello' }]
+        }
+      ]
+    })
+  });
+
+  const text = await resp.text();
+  if (!resp.ok) throw new Error(`${resp.status} ${resp.statusText}\\n${text}`);
+  console.log(text);
+}
+
+main();
+```
+
+Not sure about model ids? Copy from:
+- [Models](/en/tools/models/)

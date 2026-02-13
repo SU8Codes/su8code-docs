@@ -1,0 +1,44 @@
+---
+title: Python 接入（requests）
+---
+
+同样走最通用的 HTTP 调用，稳定不绕弯。
+
+## 最小可跑示例
+
+```python
+# main.py
+import os
+import requests
+
+base_url = "https://su8.codes/codex/v1"
+api_key = os.environ.get("OPENAI_API_KEY")
+
+if not api_key:
+    raise RuntimeError("Missing OPENAI_API_KEY")
+
+resp = requests.post(
+    f"{base_url}/responses",
+    headers={
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {api_key}",
+    },
+    json={
+        "model": "gpt-5.2",
+        "input": [
+            {
+                "type": "message",
+                "role": "user",
+                "content": [{"type": "input_text", "text": "你好"}],
+            }
+        ],
+    },
+    timeout=60,
+)
+
+resp.raise_for_status()
+print(resp.text)
+```
+
+模型名不确定就去复制：
+- [模型列表](/zh/tools/models/)

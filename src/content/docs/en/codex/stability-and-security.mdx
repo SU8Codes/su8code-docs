@@ -1,0 +1,17 @@
+---
+title: Stability & security
+---
+
+## Stability tips
+
+- Retry with backoff for network/5xx (1s → 2s → 4s)
+- Set timeouts (avoid hanging requests)
+- Start with low concurrency, then scale up
+- Log request ids (if available) for support/debugging
+
+## Security tips
+
+- Never commit API keys into git
+- Use environment variables in production
+- Do not print keys into logs
+

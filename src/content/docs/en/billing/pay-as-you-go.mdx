@@ -1,0 +1,33 @@
+---
+title: Pay-as-you-go (balance)
+---
+
+Pay-as-you-go means: **top up a balance, and each request charges based on actual usage**.
+
+Good for:
+- Irregular usage
+- Small-scale trials before committing to a plan
+
+## What you’re paying for
+
+Cost usually tracks:
+- **Input length**
+- **Output length**
+
+“It cost more than expected” is often caused by:
+- Pasting huge code/logs
+- Getting longer outputs than intended
+- Retries / loops (you thought it was 1 request, but it was N)
+
+## 5 practical ways to reduce cost
+
+1. Ask smaller, more focused questions.
+2. Don’t resend the same context if you can cache it.
+3. Draft with cheaper/smaller models, finalize with stronger ones.
+4. Put a cap on output length when possible.
+5. Retry only for 429/5xx and use backoff (1s → 2s → 4s).
+
+## Next
+
+- See: [Reconciliation](/en/billing/reconciliation/)
+- To run a first request: [Make your first request](/en/codex/verify/)

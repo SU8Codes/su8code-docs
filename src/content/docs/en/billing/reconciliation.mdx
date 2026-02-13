@@ -1,0 +1,27 @@
+---
+title: Reconciliation & common misconceptions
+---
+
+Goal: **reconcile charges without guessing** — what was sent, how many times, and where extra requests happened.
+
+## 4 common misconceptions
+
+### 1) “I clicked once, why was I charged multiple times?”
+Most commonly: **retries**.
+
+### 2) “I didn’t ask for a long answer — why is the output huge?”
+Usually the prompt is too open-ended, or there’s no output cap.
+
+### 3) “Is streaming more expensive?”
+Streaming is mostly a delivery mode. If it leads to longer outputs, then it can cost more.
+
+### 4) “I used a small model, why does it still cost a lot?”
+Huge inputs or repeated retries can dominate cost.
+
+## Quick checklist
+
+1. Pick one request in your dashboard usage logs.
+2. Verify endpoint, model, and timestamp.
+3. Check retries/loops on your client side.
+4. If it still doesn’t add up, collect: request id/time/model/endpoint and contact support.
+

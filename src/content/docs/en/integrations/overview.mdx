@@ -1,0 +1,23 @@
+---
+title: Integrations overview (general rules)
+---
+
+In short: **if a tool supports an OpenAI-compatible Base URL + API key, it can usually work with su8 codes**.
+
+You need:
+- Base URL: `https://su8.codes/codex/v1`
+- API Key: your su8 codes key
+
+## Two common endpoints
+
+- Recommended: `/responses`
+- Compatibility: `/chat/completions`
+
+Verify both here:
+- [Make your first request](/en/codex/verify/)
+
+## Most common pitfalls
+
+1. Missing `/codex/v1` in Base URL → 404
+2. Wrong model id → copy from [Models](/en/tools/models/)
+3. Tool only supports one endpoint → try `/chat/completions`

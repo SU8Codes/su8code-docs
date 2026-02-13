@@ -1,0 +1,52 @@
+---
+title: Make your first request (curl + web tester)
+---
+
+Goal: **a single successful request**. Once this works, integrations are just “different wrappers”.
+
+You need:
+- an API key
+- a model name (copy one from [Models](/en/tools/models/) if unsure)
+
+## Option A: curl (`/responses`)
+
+Replace `<YOUR_API_KEY>` and (optionally) the model:
+
+```bash
+curl 'https://su8.codes/codex/v1/responses' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer <YOUR_API_KEY>' \
+  -d '{
+    "model": "gpt-5.2",
+    "input": [
+      {
+        "type": "message",
+        "role": "user",
+        "content": [{ "type": "input_text", "text": "Hello" }]
+      }
+    ],
+    "stream": true
+  }'
+```
+
+## Option B: compatibility (`/chat/completions`)
+
+```bash
+curl 'https://su8.codes/codex/v1/chat/completions' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer <YOUR_API_KEY>' \
+  -d '{
+    "model": "gpt-5.2",
+    "messages": [
+      { "role": "user", "content": "Hello" }
+    ],
+    "stream": true
+  }'
+```
+
+## Option C: web one-click
+
+- [API Tester](/en/tools/api-tester/)
+
+If it fails, debug by status code:
+- [Troubleshooting](/en/codex/troubleshooting/)

@@ -1,0 +1,66 @@
+---
+title: Configure (Base URL + API Key)
+---
+
+This page is about one thing: **point Codex to su8 codes**.
+
+## The two values you need
+
+- Base URL: `https://su8.codes/codex/v1`
+- API Key: your su8 codes key
+
+## Auth header
+
+```bash
+Authorization: Bearer <YOUR_API_KEY>
+```
+
+## Codex CLI (manual config)
+
+Many Codex CLI versions support configuring providers under `~/.codex/`.
+
+### 1) Open config directory
+
+macOS:
+
+```bash
+open "$HOME/.codex"
+```
+
+Windows (CMD):
+
+```bash
+start "" "%USERPROFILE%\\.codex"
+```
+
+### 2) Create/modify `config.toml` and `auth.json`
+
+`config.toml` example:
+
+```toml
+model_provider = "su8"
+model = "gpt-5.2"
+network_access = "enabled"
+disable_response_storage = true
+
+[model_providers.su8]
+name = "su8"
+base_url = "https://su8.codes/codex/v1"
+wire_api = "responses"
+requires_openai_auth = true
+```
+
+`auth.json` example:
+
+```json
+{
+  "OPENAI_API_KEY": "<YOUR_API_KEY>"
+}
+```
+
+> We use the `OPENAI_API_KEY` name for compatibility. It is still your su8 codes key.
+
+### 3) Verify
+
+Next page:
+- [Make your first request](/en/codex/verify/)

@@ -1,0 +1,39 @@
+---
+title: About su8 codes
+description: Who we are, what we do, and who it’s for
+---
+
+su8 codes is focused on one thing today: a **Codex API gateway**.
+
+Think of us as a stable entry point:
+- you call our Base URL with your API key
+- we route the request to Codex
+- you get the result back
+
+## What we help with
+
+In practice, the hardest parts are often not “writing code”, but:
+- unstable networking
+- third‑party tools that only support certain endpoints (e.g. `chat/completions`)
+- troubleshooting in production
+
+We try to make integration simpler:
+- **One stable entry point**: `https://su8.codes/codex/v1`.
+- **Tool compatibility**: supports `/responses` and `/chat/completions`.
+- **Fast verification**: use the web API tester to get one request working, then integrate.
+
+## Who it’s for
+
+- You mainly use Codex (we’re currently Codex-first)
+- You want a professional, stable integration for your team/customers
+- You don’t want to spend days on networking and compatibility details
+
+## The two things to remember
+
+- Base URL: `https://su8.codes/codex/v1`
+- Auth: `Authorization: Bearer <YOUR_API_KEY>`
+
+Suggested path:
+1. Billing: [Plans](/en/billing/plans/)
+2. First request: [First request](/en/codex/verify/)
+3. Integrations: [Integrations overview](/en/integrations/overview/)

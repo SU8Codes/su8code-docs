@@ -1,0 +1,30 @@
+---
+title: su8 codes 文档
+description: Codex API 中转服务文档（含在线测试）
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+<div className="su8-hero">
+  <div className="su8-hero__badge">Codex Gateway</div>
+  <h1 className="su8-hero__title">su8 codes 文档</h1>
+  <p className="su8-hero__desc">
+    目标就一个：让你<strong>最快跑通</strong>，并且用得<strong>稳</strong>、用得<strong>放心</strong>。
+  </p>
+  <div className="su8-hero__actions">
+    <a className="su8-btn su8-btn--primary" href="/zh/billing/plans/">先看计费</a>
+    <a className="su8-btn su8-btn--ghost" href="/zh/codex/verify/">跑通一次请求</a>
+  </div>
+</div>
+
+<CardGrid>
+  <Card title="一个入口" icon="heroicons:shield-check">
+    你只要记住一个 API 地址：<code>https://su8.codes/codex/v1</code>。
+  </Card>
+  <Card title="一键验证" icon="heroicons:cursor-arrow-rays">
+    在线测试页直接发请求，看成功/失败原因，再复制 curl。
+  </Card>
+  <Card title="双语结构" icon="heroicons:language">
+    中文 + 英文目录对齐，后续补内容不乱套。
+  </Card>
+</CardGrid>

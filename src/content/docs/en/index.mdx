@@ -1,0 +1,30 @@
+---
+title: su8 codes Docs
+description: Codex API gateway docs (with API tester)
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+<div className="su8-hero">
+  <div className="su8-hero__badge">Codex Gateway</div>
+  <h1 className="su8-hero__title">su8 codes Docs</h1>
+  <p className="su8-hero__desc">
+    The goal is simple: help you get a first request working fast, then keep it stable and predictable.
+  </p>
+  <div className="su8-hero__actions">
+    <a className="su8-btn su8-btn--primary" href="/en/billing/plans/">Billing</a>
+    <a className="su8-btn su8-btn--ghost" href="/en/codex/verify/">First request</a>
+  </div>
+</div>
+
+<CardGrid>
+  <Card title="One endpoint" icon="heroicons:shield-check">
+    Remember a single API base URL: <code>https://su8.codes/codex/v1</code>.
+  </Card>
+  <Card title="One-click verify" icon="heroicons:cursor-arrow-rays">
+    Use the API tester page to run a request and copy curl.
+  </Card>
+  <Card title="Bilingual structure" icon="heroicons:language">
+    Chinese + English sidebars match, so content stays maintainable.
+  </Card>
+</CardGrid>

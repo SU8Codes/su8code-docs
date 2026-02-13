@@ -1,0 +1,55 @@
+---
+title: 跑通一次请求（curl + 在线测试）
+---
+
+这页的目标：**你照做一次就能成功**。成功了，后面接入第三方工具基本就是“换个壳”。
+
+开始前你需要：
+- 一个 API Key
+- 一个模型名（不确定就先去 [模型列表](/zh/tools/models/) 复制）
+
+## 方式 A：curl（最直观）
+
+把 `<你的API_KEY>` 换成你的 key，把 `model` 换成你的模型名：
+
+```bash
+curl 'https://su8.codes/codex/v1/responses' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer <你的API_KEY>' \
+  -d '{
+    "model": "gpt-5.2",
+    "input": [
+      {
+        "type": "message",
+        "role": "user",
+        "content": [{ "type": "input_text", "text": "你好" }]
+      }
+    ],
+    "stream": true
+  }'
+```
+
+## 方式 B：兼容模式（/chat/completions）
+
+有些第三方工具只认 `chat/completions`，你可以用这个方式先验证兼容性：
+
+```bash
+curl 'https://su8.codes/codex/v1/chat/completions' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer <你的API_KEY>' \
+  -d '{
+    "model": "gpt-5.2",
+    "messages": [
+      { "role": "user", "content": "你好" }
+    ],
+    "stream": true
+  }'
+```
+
+## 方式 C：网页一键测试（推荐给新手）
+
+不用写代码，直接点一下：
+- [在线 API 测试](/zh/tools/api-tester/)
+
+如果失败了，先别急着改一堆东西，按错误码排就行：
+- [常见错误排查](/zh/codex/troubleshooting/)

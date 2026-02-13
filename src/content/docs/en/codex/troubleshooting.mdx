@@ -1,0 +1,34 @@
+---
+title: Troubleshooting
+---
+
+## 401
+Usually an invalid key or missing permissions.
+
+Checklist:
+1. Ensure you send `Authorization: Bearer <YOUR_API_KEY>`
+2. Ensure the URL is `https://su8.codes/codex/v1/...`
+3. Regenerate a key in your dashboard and retry
+
+## 404 / model not found
+Usually:
+- wrong path (missing `/codex/v1`)
+- wrong model id
+
+Copy a model name from:
+- [Models](/en/tools/models/)
+
+## 429
+Rate limit.
+
+Try:
+- reduce concurrency
+- retry with backoff (1s/2s/4s)
+- add jitter if you have loops
+
+## 5xx
+Temporary server-side issues.
+
+Try:
+- retry with backoff
+- add timeouts

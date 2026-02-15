@@ -2,6 +2,8 @@
 title: Configure (Base URL + API Key)
 ---
 
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
 This page is about one thing: **point Codex to su8 codes**.
 
 ## The two values you need
@@ -21,17 +23,35 @@ Many Codex CLI versions support configuring providers under `~/.codex/`.
 
 ### 1) Open config directory
 
-macOS:
+<Tabs>
+  <TabItem label="Windows">
+    Create the directory (if needed):
 
-```bash
-open "$HOME/.codex"
-```
+    ```bat
+    mkdir "%USERPROFILE%\\.codex"
+    ```
 
-Windows (CMD):
+    Open it:
 
-```bash
-start "" "%USERPROFILE%\\.codex"
-```
+    ```bat
+    start "" "%USERPROFILE%\\.codex"
+    ```
+  </TabItem>
+
+  <TabItem label="macOS">
+    ```bash
+    mkdir -p "$HOME/.codex"
+    open "$HOME/.codex"
+    ```
+  </TabItem>
+
+  <TabItem label="Linux">
+    ```bash
+    mkdir -p "$HOME/.codex"
+    xdg-open "$HOME/.codex" 2>/dev/null || ls -la "$HOME/.codex"
+    ```
+  </TabItem>
+</Tabs>
 
 ### 2) Create/modify `config.toml` and `auth.json`
 

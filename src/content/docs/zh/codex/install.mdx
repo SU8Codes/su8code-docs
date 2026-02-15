@@ -2,25 +2,188 @@
 title: 安装 Codex（准备工作）
 ---
 
-你要做到的效果很简单：**你的电脑上有一个能用的 Codex 客户端**（CLI 或编辑器插件都行）。
+import { Steps, Tabs, TabItem } from '@astrojs/starlight/components';
 
-如果你已经能在终端里跑 `codex`，这页可以直接跳过，去下一页配置：
+这页只负责一件事：**让你本机有一个能用的 Codex 客户端**（CLI 或编辑器插件都行）。
+
+配置（Base URL + API Key）放在下一页：
 - [配置 su8 codes](/zh/codex/configure/)
 
-## 你用哪种都可以
+如果你已经能在终端里跑 `codex`，可以直接跳去配置页。
 
-### 方案 A：Codex CLI
-适合喜欢在终端里用的人。
+## Codex CLI（按系统）
+
+安装成功的标志很简单：运行 `codex --version` 能输出版本号。
+
+<Tabs>
+  <TabItem label="Windows">
+    <Steps>
+      1. 安装 Node.js（LTS）
+
+         ```powershell
+         winget install OpenJS.NodeJS.LTS
+         ```
+
+         装完后建议**新开一个 PowerShell**，然后验证：
+         ```powershell
+         node -v
+         npm -v
+         ```
+
+      2. 安装 Codex CLI
+
+         ```powershell
+         npm i -g @openai/codex
+         ```
+
+      3. 验证安装
+
+         ```powershell
+         codex --version
+         ```
+
+      4. 下一步：配置 Base URL + API Key
+
+         - [配置 su8 codes](/zh/codex/configure/)
+    </Steps>
+
+    如果你遇到 `codex` 找不到（command not found），先用这两条定位一下：
+    ```powershell
+    npm config get prefix
+    where.exe codex
+    ```
+  </TabItem>
+
+  <TabItem label="macOS">
+    <Steps>
+      1. 安装 Node.js（推荐 Homebrew）
+
+         ```bash
+         brew install node
+         node -v
+         npm -v
+         ```
+
+      2. 安装 Codex CLI + 验证
+
+         ```bash
+         npm i -g @openai/codex
+         codex --version
+         ```
+
+      3. 下一步：配置 Base URL + API Key
+
+         - [配置 su8 codes](/zh/codex/configure/)
+    </Steps>
+  </TabItem>
+
+  <TabItem label="Linux">
+    <Steps>
+      1. 安装 Node.js / npm（任选一种方式）
+
+         Debian/Ubuntu（NodeSource，推荐）：
+         ```bash
+         curl -fsSL "https://deb.nodesource.com/setup_lts.x" | sudo -E bash -
+         sudo apt-get install -y nodejs
+         ```
+
+         或者用系统包管理器（版本可能偏旧，但能用）：
+         ```bash
+         # Debian/Ubuntu
+         sudo apt update
+         sudo apt install -y nodejs npm
+
+         # Fedora
+         sudo dnf install -y nodejs npm
+         ```
+
+      2. 安装 Codex CLI + 验证
+
+         ```bash
+         npm i -g @openai/codex
+         codex --version
+         ```
+
+         如果遇到权限问题（不推荐长期用 sudo；临时排障可以）：
+         ```bash
+         sudo npm i -g @openai/codex
+         ```
+
+      3. 下一步：配置 Base URL + API Key
+
+         - [配置 su8 codes](/zh/codex/configure/)
+    </Steps>
+
+    <details>
+      <summary>（可选）Debian/Ubuntu：一键“安装 + 写入配置”脚本</summary>
+
+      这段脚本做三件事：
+      - 没有 Node.js/npm 就装（需要 `sudo`，走 Debian/Ubuntu 的 `apt-get`）
+      - 安装 `@openai/codex`
+      - 写入 `~/.codex/config.toml` 和 `~/.codex/auth.json`（内容与 [配置页](/zh/codex/configure/) 保持一致）
+
+      把第一行的 `OPENAI_API_KEY` 改成你的 key，然后整段复制执行：
+
+      ```bash
+set -euo pipefail
+
+# ===== 你只需要改这里 =====
+OPENAI_API_KEY="<你的API_KEY>"
+# ==========================
+
+if ! command -v node >/dev/null 2>&1 || ! command -v npm >/dev/null 2>&1; then
+  echo "[1/3] 安装 Node.js（LTS，Debian/Ubuntu 路线，需 sudo）..."
+  curl -fsSL "https://deb.nodesource.com/setup_lts.x" | sudo -E bash -
+  sudo apt-get install -y nodejs
+fi
+
+echo "[2/3] 安装 Codex CLI ..."
+if ! command -v codex >/dev/null 2>&1; then
+  npm i -g @openai/codex
+fi
+
+echo "[3/3] 写入 ~/.codex/config.toml + auth.json ..."
+mkdir -p "${HOME}/.codex"
+
+cat > "${HOME}/.codex/config.toml" <<'EOF'
+model_provider = "su8"
+model = "gpt-5.2"
+network_access = "enabled"
+disable_response_storage = true
+
+[model_providers.su8]
+name = "su8"
+base_url = "https://su8.codes/codex/v1"
+wire_api = "responses"
+requires_openai_auth = true
+EOF
+
+cat > "${HOME}/.codex/auth.json" <<EOF
+{
+  "OPENAI_API_KEY": "${OPENAI_API_KEY}"
+}
+EOF
+
+chmod 600 "${HOME}/.codex/auth.json" || true
+
+codex --version
+echo "完成。下一步去配置页确认模型/选项，然后跑通一次请求：/zh/codex/verify/"
+      ```
+
+      > 提醒：上面会覆盖你现有的 `~/.codex/config.toml` / `~/.codex/auth.json`。如果你之前已经配置过，建议先备份再跑。
+    </details>
+  </TabItem>
+</Tabs>
+
+## 编辑器插件（比如 VSCode）
 
 你只要确认两件事：
-- 终端能识别 `codex` 命令
-- 你知道它的配置目录（通常在 `~/.codex/`）
-
-### 方案 B：编辑器插件（比如 VSCode）
-适合直接在编辑器里用的人。
-
-你只要确认：
 - 插件装好了
-- 插件能让你配置“Base URL”和“API Key”（或者能读取环境变量）
+- 插件能让你配置 “Base URL” 和 “API Key”（或者能读取环境变量）
 
 > 不同版本的 Codex/插件安装方式可能不一样，这里不强行给你一条“唯一命令”。你装好后，关键是下一页把请求指向 `https://su8.codes/codex/v1`。
+
+## 下一步
+
+- 配置 Base URL + API Key： [配置 su8 codes](/zh/codex/configure/)
+- 跑通一次请求： [跑通一次请求](/zh/codex/verify/)

@@ -3,6 +3,7 @@
 # 不提交（本地参考/过程记录）
 .reference/
 helloagents/
+.omx/
 
 # Node / Astro
 node_modules/

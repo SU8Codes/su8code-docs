@@ -2,6 +2,8 @@
 title: 配置（Base URL + API Key）
 ---
 
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
 这页只讲一件事：**把 Codex 的请求打到 su8 codes**。
 
 ## 你需要的两个值
@@ -23,17 +25,35 @@ Authorization: Bearer <你的API_KEY>
 
 ### 1) 打开配置目录
 
-Mac：
+<Tabs>
+  <TabItem label="Windows">
+    先创建目录（如果还没有）：
 
-```bash
-open "$HOME/.codex"
-```
+    ```bat
+    mkdir "%USERPROFILE%\\.codex"
+    ```
 
-Windows（CMD）：
+    打开目录：
 
-```bash
-start "" "%USERPROFILE%\\.codex"
-```
+    ```bat
+    start "" "%USERPROFILE%\\.codex"
+    ```
+  </TabItem>
+
+  <TabItem label="macOS">
+    ```bash
+    mkdir -p "$HOME/.codex"
+    open "$HOME/.codex"
+    ```
+  </TabItem>
+
+  <TabItem label="Linux">
+    ```bash
+    mkdir -p "$HOME/.codex"
+    xdg-open "$HOME/.codex" 2>/dev/null || ls -la "$HOME/.codex"
+    ```
+  </TabItem>
+</Tabs>
 
 ### 2) 创建/修改两个文件
 

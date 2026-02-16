@@ -8,7 +8,7 @@ opencode 支持通过“OpenAI Compatible Provider”接入任意 OpenAI 兼容�
 
 在项目目录创建/更新 `opencode.json`，重点填写：
 
-- `options.baseURL`：`https://su8.codes/v1`（从 `https://su8.codes/v1/responses` 删掉 `/responses`）
+- `options.baseURL`：`https://su8.codes/codex/v1`（从 `https://su8.codes/codex/v1/responses` 删掉 `/responses`）
 - `options.apiKey`：`<你的 su8 codes API Key>`（或使用 `{env:SU8_API_KEY}` 从环境变量读取）
 - `models`：把你要用的模型名写进去（可从 [模型列表](/zh/tools/models/) 复制）
 
@@ -22,7 +22,7 @@ opencode 支持通过“OpenAI Compatible Provider”接入任意 OpenAI 兼容�
       "npm": "@ai-sdk/openai-compatible",
       "name": "su8 codes",
       "options": {
-        "baseURL": "https://su8.codes/v1",
+        "baseURL": "https://su8.codes/codex/v1",
         "apiKey": "{env:SU8_API_KEY}"
       },
       "models": {

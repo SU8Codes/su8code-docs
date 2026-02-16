@@ -12,7 +12,7 @@ OpenClaw 的配置文件通常在：
 
 在配置中新增（或修改）一个 Provider，并填写关键字段：
 
-- `baseUrl`：`https://su8.codes/v1`（从 `https://su8.codes/v1/responses` 删掉 `/responses`）
+- `baseUrl`：`https://su8.codes/codex/v1`（从 `https://su8.codes/codex/v1/responses` 删掉 `/responses`）
 - `apiKey`：`<你的 su8 codes API Key>`
 - `api`：`openai-responses`
 - `models[].id`：`<模型名>`（可从 [模型列表](/zh/tools/models/) 复制）
@@ -24,7 +24,7 @@ OpenClaw 的配置文件通常在：
   models: {
     providers: {
       su8: {
-        baseUrl: "https://su8.codes/v1",
+        baseUrl: "https://su8.codes/codex/v1",
         apiKey: "<你的 su8 codes API Key>",
         api: "openai-responses",
         models: [{ id: "<模型名>", name: "<模型名>" }],

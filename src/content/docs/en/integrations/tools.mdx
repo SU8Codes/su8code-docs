@@ -8,9 +8,9 @@ su8 codes implements an OpenAI-compatible API. If a tool supports **OpenAI Compa
 
 | Protocol | Base URL | Tools |
 | --- | --- | --- |
-| OpenAI compatible | `https://su8.codes/v1` | Cline, Roo Code, Kilo Code, OpenClaw, opencode, etc. |
+| OpenAI compatible | `https://su8.codes/codex/v1` | Cline, Roo Code, Kilo Code, OpenClaw, opencode, etc. |
 
-> Note: If a tool’s placeholder does **not** include `/v1` (e.g. it shows `https://api.openai.com`), use `https://su8.codes` (remove `/v1/responses` from `https://su8.codes/v1/responses`).
+> Note: If a tool’s placeholder does **not** include `/v1` (e.g. it shows `https://api.openai.com`), use `https://su8.codes/codex` (remove `/v1/responses` from `https://su8.codes/codex/v1/responses`).
 
 ## Notes
 
@@ -32,7 +32,7 @@ In VSCode, search **Cline** in Extensions and install it.
 In Cline → Settings → API Configuration:
 
 - **API Provider**: OpenAI Compatible
-- **Base URL**: `https://su8.codes/v1` (remove `/responses` from `https://su8.codes/v1/responses`)
+- **Base URL**: `https://su8.codes/codex/v1` (remove `/responses` from `https://su8.codes/codex/v1/responses`)
 - **API Key**: `<your su8 codes API key>`
 - **Model ID**: `<model id>`
 
@@ -49,7 +49,7 @@ In VSCode, search **Roo Code** in Extensions and install it.
 After installing, fill:
 
 - **API Provider**: OpenAI Compatible
-- **Base URL**: `https://su8.codes/v1`
+- **Base URL**: `https://su8.codes/codex/v1`
 - **API Key**: `<your su8 codes API key>`
 - **Model**: `<model id>`
 
@@ -66,7 +66,7 @@ In VSCode, search **Kilo Code** in Extensions and install it.
 Choose “Use your own API key”, then fill:
 
 - **API Provider**: OpenAI Compatible
-- **Base URL**: `https://su8.codes/v1`
+- **Base URL**: `https://su8.codes/codex/v1`
 - **API Key**: `<your su8 codes API key>`
 - **Model**: `<model id>`
 
@@ -76,7 +76,7 @@ Choose “Use your own API key”, then fill:
 
 OpenClaw is primarily configured via `~/.openclaw/openclaw.json`. For a custom provider, fill:
 
-- `baseUrl`: `https://su8.codes/v1`
+- `baseUrl`: `https://su8.codes/codex/v1`
 - `apiKey`: `<your su8 codes API key>`
 - `api`: `openai-responses`
 - `models[].id`: `<model id>`
@@ -88,7 +88,7 @@ Example (key fields only):
   "models": {
     "providers": {
       "su8": {
-        "baseUrl": "https://su8.codes/v1",
+        "baseUrl": "https://su8.codes/codex/v1",
         "apiKey": "<SU8_API_KEY>",
         "api": "openai-responses",
         "models": [{ "id": "<Model_Name>", "name": "<Model_Name>" }]
@@ -108,7 +108,7 @@ Edit:
 
 Fill:
 
-- `options.baseURL`: `https://su8.codes/v1`
+- `options.baseURL`: `https://su8.codes/codex/v1`
 - `options.apiKey`: `<your su8 codes API key>`
 - `models`: add your model ids
 
@@ -122,7 +122,7 @@ Example (key fields only):
       "npm": "@ai-sdk/openai-compatible",
       "name": "su8 codes",
       "options": {
-        "baseURL": "https://su8.codes/v1",
+        "baseURL": "https://su8.codes/codex/v1",
         "apiKey": "<SU8_API_KEY>"
       },
       "models": {

@@ -8,9 +8,9 @@ su8 codes 已兼容 OpenAI 接口协议。只要第三方工具支持 **OpenAI C
 
 | 接口协议 | Base URL | 适用工具 |
 | --- | --- | --- |
-| 兼容 OpenAI 接口协议 | `https://su8.codes/v1` | Cline、Roo Code、Kilo Code、OpenClaw、opencode 等 |
+| 兼容 OpenAI 接口协议 | `https://su8.codes/codex/v1` | Cline、Roo Code、Kilo Code、OpenClaw、opencode 等 |
 
-> 注意：有些工具的字段示例可能不带 `/v1`（例如示例是 `https://api.openai.com`），此时请填 `https://su8.codes`（把 `https://su8.codes/v1/responses` 里的 `/v1/responses` 一起删掉）。
+> 注意：有些工具的字段示例可能不带 `/v1`（例如示例是 `https://api.openai.com`），此时请填 `https://su8.codes/codex`（把 `https://su8.codes/codex/v1/responses` 里的 `/v1/responses` 一起删掉）。
 
 ## 说明
 
@@ -32,7 +32,7 @@ su8 codes 已兼容 OpenAI 接口协议。只要第三方工具支持 **OpenAI C
 在 Cline → Settings → API Configuration 中填写：
 
 - **API Provider**：OpenAI Compatible
-- **Base URL**：`https://su8.codes/v1`（从 `https://su8.codes/v1/responses` 删掉 `/responses`）
+- **Base URL**：`https://su8.codes/codex/v1`（从 `https://su8.codes/codex/v1/responses` 删掉 `/responses`）
 - **API Key**：`<你的 su8 codes API Key>`
 - **Model ID**：`<模型名>`
 
@@ -49,7 +49,7 @@ su8 codes 已兼容 OpenAI 接口协议。只要第三方工具支持 **OpenAI C
 安装完成后，配置以下信息：
 
 - **API Provider**：OpenAI Compatible
-- **Base URL**：`https://su8.codes/v1`
+- **Base URL**：`https://su8.codes/codex/v1`
 - **API Key**：`<你的 su8 codes API Key>`
 - **Model**：`<模型名>`
 
@@ -66,7 +66,7 @@ su8 codes 已兼容 OpenAI 接口协议。只要第三方工具支持 **OpenAI C
 选择 Use your own API key，然后填写：
 
 - **API Provider**：OpenAI Compatible
-- **Base URL**：`https://su8.codes/v1`
+- **Base URL**：`https://su8.codes/codex/v1`
 - **API Key**：`<你的 su8 codes API Key>`
 - **Model**：`<模型名>`
 
@@ -80,7 +80,7 @@ OpenClaw 的配置文件通常在：
 
 需要填写的核心字段：
 
-- `baseUrl`：`https://su8.codes/v1`
+- `baseUrl`：`https://su8.codes/codex/v1`
 - `apiKey`：`<你的 su8 codes API Key>`
 - `api`：`openai-responses`
 - `models[].id`：`<模型名>`
@@ -92,7 +92,7 @@ OpenClaw 的配置文件通常在：
   "models": {
     "providers": {
       "su8": {
-        "baseUrl": "https://su8.codes/v1",
+        "baseUrl": "https://su8.codes/codex/v1",
         "apiKey": "<SU8_API_KEY>",
         "api": "openai-responses",
         "models": [{ "id": "<Model_Name>", "name": "<Model_Name>" }]
@@ -112,7 +112,7 @@ OpenClaw 的配置文件通常在：
 
 重点填写：
 
-- `options.baseURL`：`https://su8.codes/v1`
+- `options.baseURL`：`https://su8.codes/codex/v1`
 - `options.apiKey`：`<你的 su8 codes API Key>`
 - `models`：把你要用的模型名写进去
 
@@ -126,7 +126,7 @@ OpenClaw 的配置文件通常在：
       "npm": "@ai-sdk/openai-compatible",
       "name": "su8 codes",
       "options": {
-        "baseURL": "https://su8.codes/v1",
+        "baseURL": "https://su8.codes/codex/v1",
         "apiKey": "<SU8_API_KEY>"
       },
       "models": {

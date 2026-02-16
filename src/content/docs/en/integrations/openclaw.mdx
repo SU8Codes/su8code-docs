@@ -12,7 +12,7 @@ OpenClaw is usually configured via:
 
 Add (or edit) a custom provider and fill the key fields:
 
-- `baseUrl`: `https://su8.codes/v1` (from `https://su8.codes/v1/responses`, remove `/responses`)
+- `baseUrl`: `https://su8.codes/codex/v1` (from `https://su8.codes/codex/v1/responses`, remove `/responses`)
 - `apiKey`: `<your su8 codes API key>`
 - `api`: `openai-responses`
 - `models[].id`: `<model id>` (copy from [Models](/en/tools/models/))
@@ -24,7 +24,7 @@ Example (key fields only):
   models: {
     providers: {
       su8: {
-        baseUrl: "https://su8.codes/v1",
+        baseUrl: "https://su8.codes/codex/v1",
         apiKey: "<your su8 codes API key>",
         api: "openai-responses",
         models: [{ id: "<model id>", name: "<model id>" }]

@@ -68,7 +68,7 @@ export default defineConfig({
   vite: {
     server: {
       proxy: {
-        '/v1': {
+        '/codex/v1': {
           target: 'https://su8.codes',
           changeOrigin: true
         }

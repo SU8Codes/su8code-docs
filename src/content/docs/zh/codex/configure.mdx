@@ -8,7 +8,7 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 
 ## 你需要的两个值
 
-- Base URL：`https://su8.codes/v1`
+- Base URL：`https://su8.codes/codex/v1`
 - API Key：你在 su8 codes 后台生成的 key
 
 ## 最通用的鉴权写法
@@ -71,7 +71,7 @@ disable_response_storage = true
 
 [model_providers.su8]
 name = "su8"
-base_url = "https://su8.codes/v1"
+base_url = "https://su8.codes/codex/v1"
 wire_api = "responses"
 requires_openai_auth = true
 ```

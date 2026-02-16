@@ -43,7 +43,17 @@ export default defineConfig({
         {
           label: '第三方接入',
           translations: { en: 'Integrations' },
-          items: ['integrations/overview', 'integrations/node', 'integrations/python', 'integrations/tools']
+          items: [
+            'integrations/overview',
+            'integrations/node',
+            'integrations/python',
+            'integrations/tools',
+            'integrations/cline',
+            'integrations/roo-code',
+            'integrations/openclaw',
+            'integrations/kilo-code',
+            'integrations/opencode'
+          ]
         },
         {
           label: '关于',
@@ -58,7 +68,7 @@ export default defineConfig({
   vite: {
     server: {
       proxy: {
-        '/codex/v1': {
+        '/v1': {
           target: 'https://su8.codes',
           changeOrigin: true
         }

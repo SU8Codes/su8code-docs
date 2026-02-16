@@ -1,16 +1,139 @@
 ---
-title: Configure common third-party tools
+title: Other tools
 ---
 
-UIs differ, but the required settings are usually the same.
+su8 codes implements an OpenAI-compatible API. If a tool supports **OpenAI Compatible** (custom Base URL + API Key), you can usually connect it quickly.
 
-## The 3 settings you need
+## Supported tools
 
-1. **OpenAI API Key / API Key**: your su8 codes key
-2. **OpenAI Base URL / Endpoint**: `https://su8.codes/codex/v1`
-3. **Model**: a model id available to your account (copy from [Models](/en/tools/models/))
+| Protocol | Base URL | Tools |
+| --- | --- | --- |
+| OpenAI compatible | `https://su8.codes/v1` | Cline, Roo Code, Kilo Code, OpenClaw, opencode, etc. |
 
-## How to verify quickly
+> Note: If a tool’s placeholder does **not** include `/v1` (e.g. it shows `https://api.openai.com`), use `https://su8.codes` (remove `/v1/responses` from `https://su8.codes/v1/responses`).
+
+## Notes
+
+Before configuring a tool:
+
+1. Create an **API Key** in your su8 codes dashboard.
+2. Fill **Model / Model ID** with a model available to your account (copy from [Models](/en/tools/models/)).
+
+Below are the exact fields to fill for each tool.
+
+## Cline
+
+### Install
+
+In VSCode, search **Cline** in Extensions and install it.
+
+### Configure (fields only)
+
+In Cline → Settings → API Configuration:
+
+- **API Provider**: OpenAI Compatible
+- **Base URL**: `https://su8.codes/v1` (remove `/responses` from `https://su8.codes/v1/responses`)
+- **API Key**: `<your su8 codes API key>`
+- **Model ID**: `<model id>`
+
+## Roo Code
+
+### Install
+
+In VSCode, search **Roo Code** in Extensions and install it.
+
+![Roo Code install image](/integrations/roo-code-install.png)
+
+### Configure (fields only)
+
+After installing, fill:
+
+- **API Provider**: OpenAI Compatible
+- **Base URL**: `https://su8.codes/v1`
+- **API Key**: `<your su8 codes API key>`
+- **Model**: `<model id>`
+
+## Kilo Code
+
+### Install
+
+In VSCode, search **Kilo Code** in Extensions and install it.
+
+![Kilo Code install image](/integrations/kilo-code-install.png)
+
+### Configure (fields only)
+
+Choose “Use your own API key”, then fill:
+
+- **API Provider**: OpenAI Compatible
+- **Base URL**: `https://su8.codes/v1`
+- **API Key**: `<your su8 codes API key>`
+- **Model**: `<model id>`
+
+## OpenClaw
+
+### Configure (fields only)
+
+OpenClaw is primarily configured via `~/.openclaw/openclaw.json`. For a custom provider, fill:
+
+- `baseUrl`: `https://su8.codes/v1`
+- `apiKey`: `<your su8 codes API key>`
+- `api`: `openai-responses`
+- `models[].id`: `<model id>`
+
+Example (key fields only):
+
+```jsonc
+{
+  "models": {
+    "providers": {
+      "su8": {
+        "baseUrl": "https://su8.codes/v1",
+        "apiKey": "<SU8_API_KEY>",
+        "api": "openai-responses",
+        "models": [{ "id": "<Model_Name>", "name": "<Model_Name>" }]
+      }
+    }
+  }
+}
+```
+
+## opencode
+
+### Configure (fields only)
+
+Edit:
+
+- `~/.config/opencode/opencode.json`
+
+Fill:
+
+- `options.baseURL`: `https://su8.codes/v1`
+- `options.apiKey`: `<your su8 codes API key>`
+- `models`: add your model ids
+
+Example (key fields only):
+
+```jsonc
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "su8": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "su8 codes",
+      "options": {
+        "baseURL": "https://su8.codes/v1",
+        "apiKey": "<SU8_API_KEY>"
+      },
+      "models": {
+        "<Model_Name>": { "name": "<Model_Name>" }
+      }
+    }
+  }
+}
+```
+
+## Quick verification
 
 - [API Tester](/en/tools/api-tester/)
 - If errors happen: [Troubleshooting](/en/codex/troubleshooting/)

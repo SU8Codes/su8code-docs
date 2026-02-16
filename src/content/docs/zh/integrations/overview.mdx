@@ -5,7 +5,7 @@ title: 第三方接入总览（通用原则）
 一句话：**只要第三方工具支持“OpenAI 兼容的 Base URL + API Key”，基本都能接到 su8 codes。**
 
 你需要的还是那两个值：
-- Base URL：`https://su8.codes/codex/v1`
+- Base URL：`https://su8.codes/v1`
 - API Key：你的 su8 codes key
 
 ## 两种常见接口
@@ -18,6 +18,6 @@ title: 第三方接入总览（通用原则）
 
 ## 接入时最常见的坑
 
-1. **Base URL 少写了 `/codex/v1`**：结果一直 404。
+1. **Base URL 少写了 `/v1`**：结果一直 404。
 2. **模型名没对上**：先去 [模型列表](/zh/tools/models/) 复制。
 3. **工具只支持某个接口**：优先试 `/chat/completions` 兼容模式。

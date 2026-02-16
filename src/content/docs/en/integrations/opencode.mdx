@@ -1,0 +1,42 @@
+---
+title: opencode integration
+---
+
+opencode can connect to any OpenAI-compatible gateway (including su8 codes) via a custom provider.
+
+## What to fill in opencode (fields only)
+
+Create/update `opencode.json` in your project and fill the key fields:
+
+- `options.baseURL`: `https://su8.codes/v1` (from `https://su8.codes/v1/responses`, remove `/responses`)
+- `options.apiKey`: `<your su8 codes API key>` (or `{env:SU8_API_KEY}` to read from env vars)
+- `models`: add the model ids you want to use (copy from [Models](/en/tools/models/))
+
+Example (key fields only):
+
+```json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "su8": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "su8 codes",
+      "options": {
+        "baseURL": "https://su8.codes/v1",
+        "apiKey": "{env:SU8_API_KEY}"
+      },
+      "models": {
+        "<model id>": {
+          "name": "<model id>"
+        }
+      }
+    }
+  }
+}
+```
+
+Quick check:
+- [API Tester](/en/tools/api-tester/)
+
+If errors happen:
+- [Troubleshooting](/en/codex/troubleshooting/)

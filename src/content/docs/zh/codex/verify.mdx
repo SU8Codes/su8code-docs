@@ -13,7 +13,7 @@ title: 跑通一次请求（curl + 在线测试）
 把 `<你的API_KEY>` 换成你的 key，把 `model` 换成你的模型名：
 
 ```bash
-curl 'https://su8.codes/codex/v1/responses' \
+curl 'https://su8.codes/v1/responses' \
   -H 'Content-Type: application/json' \
   -H 'Authorization: Bearer <你的API_KEY>' \
   -d '{
@@ -34,7 +34,7 @@ curl 'https://su8.codes/codex/v1/responses' \
 有些第三方工具只认 `chat/completions`，你可以用这个方式先验证兼容性：
 
 ```bash
-curl 'https://su8.codes/codex/v1/chat/completions' \
+curl 'https://su8.codes/v1/chat/completions' \
   -H 'Content-Type: application/json' \
   -H 'Authorization: Bearer <你的API_KEY>' \
   -d '{

@@ -1,0 +1,41 @@
+---
+title: OpenClaw 接入
+---
+
+OpenClaw 支持通过自定义 Provider 接入 OpenAI Responses 协议（适合把请求转到 su8 codes 这类网关）。
+
+## 在 OpenClaw 里怎么填（只讲字段）
+
+OpenClaw 的配置文件通常在：
+
+- `~/.openclaw/openclaw.json`
+
+在配置中新增（或修改）一个 Provider，并填写关键字段：
+
+- `baseUrl`：`https://su8.codes/v1`（从 `https://su8.codes/v1/responses` 删掉 `/responses`）
+- `apiKey`：`<你的 su8 codes API Key>`
+- `api`：`openai-responses`
+- `models[].id`：`<模型名>`（可从 [模型列表](/zh/tools/models/) 复制）
+
+示例（只保留关键字段，便于你对照填值）：
+
+```json5
+{
+  models: {
+    providers: {
+      su8: {
+        baseUrl: "https://su8.codes/v1",
+        apiKey: "<你的 su8 codes API Key>",
+        api: "openai-responses",
+        models: [{ id: "<模型名>", name: "<模型名>" }],
+      },
+    },
+  },
+}
+```
+
+配置完成后，先用这页自检（最快）：
+- [在线 API 测试](/zh/tools/api-tester/)
+
+如果报错按这页排：
+- [常见错误排查](/zh/codex/troubleshooting/)

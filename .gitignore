@@ -4,6 +4,7 @@
 .reference/
 helloagents/
 .omx/
+.research-repos/
 
 # Node / Astro
 node_modules/

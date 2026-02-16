@@ -5,12 +5,12 @@ type Endpoint = 'responses' | 'chat_completions';
 function getApiBaseUrl() {
   // 本地开发：用 Vite proxy（同源，避免 CORS）
   // 线上部署到 docs.su8.codes：直接请求 su8.codes（跨域，需要 API 放行 CORS）
-  if (typeof window === 'undefined') return 'https://su8.codes/codex/v1';
+  if (typeof window === 'undefined') return 'https://su8.codes/v1';
   const host = window.location.hostname;
   const isLocal = host === 'localhost' || host === '127.0.0.1';
-  if (isLocal) return '/codex/v1';
-  if (host === 'su8.codes') return '/codex/v1';
-  return 'https://su8.codes/codex/v1';
+  if (isLocal) return '/v1';
+  if (host === 'su8.codes') return '/v1';
+  return 'https://su8.codes/v1';
 }
 
 function buildCurl(params: {
@@ -22,8 +22,8 @@ function buildCurl(params: {
 }) {
   const url =
     params.endpoint === 'responses'
-      ? 'https://su8.codes/codex/v1/responses'
-      : 'https://su8.codes/codex/v1/chat/completions';
+      ? 'https://su8.codes/v1/responses'
+      : 'https://su8.codes/v1/chat/completions';
   const headers = [
     "-H 'Content-Type: application/json'",
     `-H 'Authorization: Bearer ${params.apiKey || '<YOUR_API_KEY>'}'`

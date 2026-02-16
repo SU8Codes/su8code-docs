@@ -6,12 +6,12 @@ type ModelItem = {
 };
 
 function getApiBaseUrl() {
-  if (typeof window === 'undefined') return 'https://su8.codes/codex/v1';
+  if (typeof window === 'undefined') return 'https://su8.codes/v1';
   const host = window.location.hostname;
   const isLocal = host === 'localhost' || host === '127.0.0.1';
-  if (isLocal) return '/codex/v1';
-  if (host === 'su8.codes') return '/codex/v1';
-  return 'https://su8.codes/codex/v1';
+  if (isLocal) return '/v1';
+  if (host === 'su8.codes') return '/v1';
+  return 'https://su8.codes/v1';
 }
 
 function normalizeModels(payload: unknown): string[] {
@@ -113,7 +113,7 @@ export default function ModelsList() {
           <div style={{ display: 'grid', gap: 10 }}>
             <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
               <button
-                onClick={() => copy('https://su8.codes/codex/v1')}
+                onClick={() => copy('https://su8.codes/v1')}
                 style={{
                   padding: '8px 12px',
                   borderRadius: 10,

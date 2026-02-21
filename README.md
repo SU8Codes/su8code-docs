@@ -1,4 +1,4 @@
-# su8 codes docs (Starlight)
+# su8 codes docs (Rspress)
 
 这是对外的文档站源码（部署到 `docs.su8.codes`）。
 

@@ -5,5 +5,5 @@
     "jsxImportSource": "react",
     "types": ["astro/client"]
   },
-  "include": ["src", ".astro/types.d.ts", "astro.config.ts"]
+  "include": ["src", "functions", ".astro/types.d.ts", "astro.config.ts"]
 }

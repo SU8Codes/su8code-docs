@@ -27,11 +27,37 @@ function devRootRedirect(): Plugin {
     const fromCookie = String(cookies[cookieName] ?? '').toLowerCase();
     if (fromCookie === 'zh' || fromCookie === 'en') return fromCookie;
 
-    const first = String(params.acceptLanguage ?? '')
-      .split(',')[0]
-      ?.trim()
-      .toLowerCase();
-    if (first?.startsWith('zh')) return 'zh';
+    const raw = String(params.acceptLanguage ?? '').trim();
+    if (!raw) return 'en';
+
+    type Range = { lang: string; q: number; index: number };
+    const ranges: Range[] = [];
+
+    raw.split(',').forEach((part, index) => {
+      const segments = part.split(';');
+      const lang = segments[0]?.trim().toLowerCase();
+      if (!lang) return;
+
+      let q = 1;
+      for (let i = 1; i < segments.length; i++) {
+        const param = segments[i]?.trim().toLowerCase();
+        if (!param?.startsWith('q=')) continue;
+        const parsed = Number.parseFloat(param.slice(2));
+        if (!Number.isNaN(parsed) && parsed >= 0 && parsed <= 1) q = parsed;
+        break;
+      }
+
+      ranges.push({ lang, q, index });
+    });
+
+    ranges.sort((a, b) => (b.q !== a.q ? b.q - a.q : a.index - b.index));
+
+    for (const { lang } of ranges) {
+      if (lang === '*') continue;
+      if (lang.startsWith('zh')) return 'zh';
+      if (lang.startsWith('en')) return 'en';
+    }
+
     return 'en';
   }
 
@@ -48,8 +74,11 @@ function devRootRedirect(): Plugin {
           acceptLanguage: req?.headers?.['accept-language']
         });
 
+        const requestUrl = new URL(url, 'http://localhost');
+        const search = requestUrl.search || '';
+
         res.statusCode = 302;
-        res.setHeader('Location', `/${locale}/`);
+        res.setHeader('Location', `/${locale}/${search}`);
         if (!String(req?.headers?.cookie ?? '').includes(`${cookieName}=`)) {
           res.setHeader('Set-Cookie', `${cookieName}=${locale}; Max-Age=31536000; Path=/; SameSite=Lax`);
         }

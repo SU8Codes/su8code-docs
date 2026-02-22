@@ -3,17 +3,24 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "rspress dev",
-    "build": "rspress build",
-    "preview": "rspress preview --host 127.0.0.1 --port 3000"
+    "dev": "astro dev --host 127.0.0.1 --port 4600",
+    "build": "astro build",
+    "preview": "astro preview --host 127.0.0.1 --port 4600",
+    "typecheck": "astro sync && tsc -p tsconfig.json --noEmit",
+    "test:smoke": "bun scripts/smoke.mjs",
+    "test": "bun run typecheck && bun run build && bun run test:smoke"
   },
   "dependencies": {
     "@iconify/react": "^6.0.0",
+    "@astrojs/mdx": "^4.3.13",
+    "@astrojs/react": "^4.4.2",
+    "@astrojs/starlight": "^0.37.6",
+    "astro": "^5.17.3",
     "react": "^19.2.4",
-    "react-dom": "^19.2.4"
+    "react-dom": "^19.2.4",
+    "starlight-theme-next": "^0.3.3"
   },
   "devDependencies": {
-    "@rspress/core": "^2.0.3",
     "@types/node": "^22.13.5",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",

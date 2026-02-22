@@ -1,23 +1,38 @@
 ---
-title: Integrations overview (general rules)
+title: Integrations overview
 ---
 
-In short: **if a tool supports an OpenAI-compatible Base URL + API key, it can usually work with su8 codes**.
+In short: **if your tool lets you set “Base URL + API key”, it can usually work with SU8 Codes**.
 
-You need:
-- Base URL: `https://su8.codes/codex/v1`
-- API Key: your su8 codes key
+## What you need
+
+- Base URL: `https://www.su8.codes/codex/v1`
+- API key: a key you created in the dashboard
+- Model id: copy from [Models](/en/tools/models/) if you’re unsure
+
+## Start with the two most common paths
+
+- Codex CLI (recommended): follow the config page  
+  - [Codex configuration](/en/codex/configure/)
+- OpenClaw: a few fields in a config file  
+  - [OpenClaw integration](/en/integrations/openclaw/)
 
 ## Two common endpoints
 
 - Recommended: `/responses`
 - Compatibility: `/chat/completions`
 
-Verify both here:
-- [Make your first request](/en/codex/verify/)
+Verify with either:
+- [API Tester](/en/tools/api-tester/)
+- [First request (curl)](/en/codex/verify/)
 
 ## Most common pitfalls
 
 1. Missing `/codex/v1` in Base URL → 404
 2. Wrong model id → copy from [Models](/en/tools/models/)
 3. Tool only supports one endpoint → try `/chat/completions`
+
+## Next
+
+- For other tools (Cline/Roo/Kilo/opencode, etc.): [Field reference](/en/integrations/tools/)
+- If something fails: [Troubleshooting](/en/codex/troubleshooting/)

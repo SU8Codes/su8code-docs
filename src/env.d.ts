@@ -1,2 +1,2 @@
-export {};
+/// <reference types="astro/client" />
 

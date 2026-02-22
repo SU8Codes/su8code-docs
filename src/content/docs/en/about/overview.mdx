@@ -1,14 +1,14 @@
 ---
-title: About su8 codes
+title: About SU8 Codes
 description: Who we are, what we do, and who it’s for
 ---
 
-su8 codes is focused on one thing today: a **Codex API gateway**.
+SU8 Codes is focused on one thing: a **stable, production-friendly gateway for Codex**.
 
-Think of us as a stable entry point:
-- you call our Base URL with your API key
-- we route the request to Codex
-- you get the result back
+Think of us as an “enterprise-style” entry point:
+- you set **Base URL + API key** in your tool
+- we route requests to Codex with stability and compatibility in mind
+- you get the result back (and clearer errors when something goes wrong)
 
 ## What we help with
 
@@ -18,9 +18,10 @@ In practice, the hardest parts are often not “writing code”, but:
 - troubleshooting in production
 
 We try to make integration simpler:
-- **One stable entry point**: `https://su8.codes/codex/v1`.
+- **One entry point**: `https://www.su8.codes/codex/v1`.
 - **Tool compatibility**: supports `/responses` and `/chat/completions`.
-- **Fast verification**: use the web API tester to get one request working, then integrate.
+- **Fast verification**: get one request working first, then plug it into your tool.
+- **Availability target**: 99.9% (the goal is “fewer surprises” + “faster debugging”).
 
 ## Who it’s for
 
@@ -30,10 +31,12 @@ We try to make integration simpler:
 
 ## The two things to remember
 
-- Base URL: `https://su8.codes/codex/v1`
+- Base URL: `https://www.su8.codes/codex/v1`
 - Auth: `Authorization: Bearer <YOUR_API_KEY>`
+
+> If you see a `https://www.su8.codes/...` domain, that’s fine too — just make sure the path includes `/codex/v1`.
 
 Suggested path:
 1. Billing: [Plans](/en/billing/plans/)
-2. First request: [First request](/en/codex/verify/)
-3. Integrations: [Integrations overview](/en/integrations/overview/)
+2. Quickstart: [3-step quickstart](/en/start/three-steps/)
+3. Integrations: [Codex / OpenClaw integrations](/en/integrations/overview/)

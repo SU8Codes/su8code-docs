@@ -1,6 +1,8 @@
 import { spawn } from 'node:child_process';
+import { createServer } from 'node:http';
 import process from 'node:process';
 import net from 'node:net';
+import { localeCookieName, parseCookie, pickLocale, supportedLocales } from '../functions/_shared/locale.ts';
 
 const host = '127.0.0.1';
 let port = Number.parseInt(process.env.SMOKE_PORT ?? process.env.PORT ?? '4600', 10);
@@ -36,15 +38,93 @@ async function ensurePortFree(host, preferredPort) {
   );
 }
 
-async function fetchText(url) {
-  const resp = await fetch(url, { redirect: 'manual' });
+async function fetchText(url, options = {}) {
+  const resp = await fetch(url, { redirect: 'manual', ...options });
   const text = await resp.text().catch(() => '');
   return {
     ok: resp.ok,
     status: resp.status,
     location: resp.headers.get('location'),
+    setCookie: resp.headers.get('set-cookie'),
     text
   };
+}
+
+function createRootRedirectProxy({ host, port, previewBaseUrl }) {
+  const server = createServer(async (req, res) => {
+    try {
+      const requestUrl = new URL(req.url ?? '/', `http://${host}:${port}`);
+
+      if (requestUrl.pathname === '/' && (req.method === 'GET' || req.method === 'HEAD')) {
+        const cookieHeader = String(req.headers?.cookie ?? '');
+        const cookies = parseCookie(cookieHeader);
+
+        const locale = pickLocale({
+          cookieHeader,
+          acceptLanguageHeader: String(req.headers?.['accept-language'] ?? ''),
+          cookieName: localeCookieName,
+          defaultLocale: 'en'
+        });
+
+        if (!supportedLocales.includes(locale)) {
+          res.statusCode = 302;
+          res.setHeader('Location', `/en/${requestUrl.search || ''}`);
+          return res.end();
+        }
+
+        res.statusCode = 302;
+        res.setHeader('Location', `/${locale}/${requestUrl.search || ''}`);
+
+        if (!cookies[localeCookieName]) {
+          const cookieParts = [
+            `${localeCookieName}=${encodeURIComponent(locale)}`,
+            'Max-Age=31536000',
+            'Path=/',
+            'SameSite=Lax'
+          ];
+          if (String(req.headers?.['x-forwarded-proto'] ?? '') === 'https') cookieParts.push('Secure');
+          res.setHeader('Set-Cookie', cookieParts.join('; '));
+        }
+
+        return res.end();
+      }
+
+      // Proxy everything else to `astro preview` so we can smoke-test `/` redirect behavior.
+      const targetUrl = new URL(req.url ?? '/', previewBaseUrl);
+      const headers = new Headers();
+      for (const [key, value] of Object.entries(req.headers ?? {})) {
+        if (typeof value === 'string') headers.set(key, value);
+        else if (Array.isArray(value)) headers.set(key, value.join(', '));
+      }
+      headers.delete('host');
+      // Avoid content-encoding mismatch when proxying through Bun/Node fetch.
+      headers.set('accept-encoding', 'identity');
+
+      const upstream = await fetch(targetUrl, {
+        method: req.method,
+        headers,
+        redirect: 'manual'
+      });
+
+      res.statusCode = upstream.status;
+      upstream.headers.forEach((value, key) => {
+        if (key.toLowerCase() === 'transfer-encoding') return;
+        if (key.toLowerCase() === 'content-encoding') return;
+        if (key.toLowerCase() === 'content-length') return;
+        res.setHeader(key, value);
+      });
+      const body = await upstream.arrayBuffer().catch(() => null);
+      res.end(body ? Buffer.from(body) : undefined);
+    } catch {
+      res.statusCode = 502;
+      res.end('bad gateway');
+    }
+  });
+
+  return new Promise((resolve, reject) => {
+    server.once('error', reject);
+    server.listen(port, host, () => resolve(server));
+  });
 }
 
 async function waitForServer(url, previewExited, timeoutMs = 45_000) {
@@ -69,7 +149,9 @@ async function waitForServer(url, previewExited, timeoutMs = 45_000) {
 
 async function main() {
   port = await ensurePortFree(host, port);
-  const baseUrl = `http://${host}:${port}`;
+  const previewBaseUrl = `http://${host}:${port}`;
+  const proxyPort = await ensurePortFree(host, port + 1);
+  const baseUrl = `http://${host}:${proxyPort}`;
 
   let exited = false;
   const preview = spawn(astroBin, ['preview', '--host', host, '--port', String(port)], {
@@ -84,7 +166,14 @@ async function main() {
     });
   });
 
+  const proxyServer = await createRootRedirectProxy({
+    host,
+    port: proxyPort,
+    previewBaseUrl
+  });
+
   const stop = async () => {
+    proxyServer.close();
     if (preview.killed) return;
     preview.kill('SIGTERM');
     await sleep(500);
@@ -99,6 +188,30 @@ async function main() {
     await waitForServer(`${baseUrl}/zh/`, () => exited);
 
     const urls = [
+      {
+        path: '/',
+        headers: { 'accept-language': 'en-US,en;q=0.9' },
+        allowRedirectTo: ['/en/'],
+        expectSetCookie: true
+      },
+      {
+        path: '/',
+        headers: { 'accept-language': 'zh-CN,zh;q=0.9,en;q=0.8' },
+        allowRedirectTo: ['/zh/'],
+        expectSetCookie: true
+      },
+      {
+        path: '/?utm_source=smoke',
+        headers: { 'accept-language': 'en-US,en;q=0.9' },
+        allowRedirectTo: ['/en/?utm_source=smoke'],
+        expectSetCookie: true
+      },
+      {
+        path: '/',
+        headers: { cookie: 'su8_locale=zh', 'accept-language': 'en-US,en;q=0.9' },
+        allowRedirectTo: ['/zh/'],
+        expectSetCookie: false
+      },
       { path: '/zh/', mustContain: ['starlight-lang-select'], mustNotContain: ['data-su8-theme-toggle', 'starlight-theme-select'] },
       { path: '/en/', mustContain: ['starlight-lang-select'], mustNotContain: ['data-su8-theme-toggle', 'starlight-theme-select'] },
       { path: '/zh/tools/api-tester/', mustContain: ['在线 API 测试', 'API Key', 'type=\"password\"'] },
@@ -112,7 +225,9 @@ async function main() {
     const failed = [];
     for (const item of urls) {
       const url = `${baseUrl}${item.path}`;
-      const { ok, status, location, text } = await fetchText(url);
+      const { ok, status, location, setCookie, text } = await fetchText(url, {
+        headers: item.headers
+      });
 
       if (!ok) {
         if (
@@ -121,6 +236,16 @@ async function main() {
           item.allowRedirectTo &&
           item.allowRedirectTo.includes(location ?? '')
         ) {
+          if (typeof item.expectSetCookie === 'boolean') {
+            const hasCookie = Boolean(setCookie && setCookie.includes(`${localeCookieName}=`));
+            if (item.expectSetCookie !== hasCookie) {
+              failed.push({
+                url,
+                status,
+                reason: item.expectSetCookie ? 'missing Set-Cookie' : 'unexpected Set-Cookie'
+              });
+            }
+          }
           continue;
         }
         failed.push({ url, status, reason: location ? `redirected to: ${location}` : undefined });

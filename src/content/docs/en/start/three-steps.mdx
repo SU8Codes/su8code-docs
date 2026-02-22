@@ -1,0 +1,49 @@
+---
+title: 3-step quickstart
+description: Pick billing → Create a key → Configure & verify
+---
+
+This page is only about one thing: **get a first request working fast**.
+
+## Step 1: Pick the right billing mode
+
+Choose one:
+- **Plans**: best if you use it daily and want a predictable budget  
+  - [Plans](/en/billing/plans/)
+- **Pay-as-you-go (balance)**: best if you want to start small  
+  - [Pay-as-you-go](/en/billing/pay-as-you-go/)
+
+## Step 2: Create an API key
+
+Create a key in the SU8 Codes dashboard, then store it somewhere safe.
+
+Quick reminders:
+- Don’t paste keys into screenshots or git repos
+- Copy/paste it into your tool only when needed
+
+## Step 3: Set Base URL + API key in your tool, then verify
+
+You only need two things:
+- Base URL: `https://www.su8.codes/codex/v1`
+- API key: the key you just created (usually as `Authorization: Bearer <YOUR_API_KEY>`)
+
+### What counts as “success”
+
+If you get a normal response using either method, you’re good:
+- Fastest: [API Tester](/en/tools/api-tester/)
+- CLI: [First request (curl)](/en/codex/verify/)
+
+### 3 common mistakes (avoid these)
+
+1. Missing `/codex/v1` in Base URL → usually 404
+2. Putting `/responses` into Base URL → some tools append it again
+3. Wrong model id → copy from [Models](/en/tools/models/)
+
+### Next: follow your tool
+
+Start with these (we keep them most up-to-date):
+- [Codex configuration](/en/codex/configure/)
+- [OpenClaw integration](/en/integrations/openclaw/)
+
+For other tools that support “custom Base URL + API key”:
+- [Other tools](/en/integrations/tools/)

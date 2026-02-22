@@ -5,14 +5,14 @@ title: Node.js 接入（fetch）
 这是最通用、最不挑版本的写法：直接用 HTTP 调用。
 
 你只需要准备：
-- `OPENAI_API_KEY` 环境变量（放你的 su8 codes key）
+- `OPENAI_API_KEY` 环境变量（放你的 SU8 Codes key）
 - Node.js 18+（自带 `fetch`）
 
 ## 最小可跑示例
 
 ```js
 // node.mjs
-const baseURL = 'https://su8.codes/codex/v1';
+const baseURL = 'https://www.su8.codes/codex/v1';
 const apiKey = process.env.OPENAI_API_KEY;
 
 if (!apiKey) {

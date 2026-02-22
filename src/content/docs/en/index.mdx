@@ -1,5 +1,5 @@
 ---
-title: su8 codes Docs
+title: SU8 Codes Docs
 description: Codex API gateway docs (with API tester)
 ---
 
@@ -7,24 +7,24 @@ import { Card, CardGrid } from '@astrojs/starlight/components';
 
 <div className="su8-hero">
   <div className="su8-hero__badge">Codex Gateway</div>
-  <h1 className="su8-hero__title">su8 codes Docs</h1>
+  <h1 className="su8-hero__title">SU8 Codes Docs</h1>
   <p className="su8-hero__desc">
-    The goal is simple: help you get a first request working fast, then keep it stable and predictable.
+    The goal is simple: get you working in 3 steps, then keep it stable (99.9% availability target).
   </p>
   <div className="su8-hero__actions">
-    <a className="su8-btn su8-btn--primary" href="/en/billing/plans/">Billing</a>
-    <a className="su8-btn su8-btn--ghost" href="/en/codex/verify/">First request</a>
+    <a className="su8-btn su8-btn--primary" href="/en/start/three-steps/">3-step quickstart</a>
+    <a className="su8-btn su8-btn--ghost" href="/en/integrations/overview/">Integrate (Codex / OpenClaw)</a>
   </div>
 </div>
 
 <CardGrid>
-  <Card title="One endpoint" icon="heroicons:shield-check">
-    Remember a single API base URL: <code>https://su8.codes/codex/v1</code>.
+  <Card title="One Base URL" icon="heroicons:shield-check">
+    Remember one base URL: <code>https://www.su8.codes/codex/v1</code>.
   </Card>
-  <Card title="One-click verify" icon="heroicons:cursor-arrow-rays">
-    Use the API tester page to run a request and copy curl.
+  <Card title="Verify first" icon="heroicons:cursor-arrow-rays">
+    Use the API tester to verify, then plug it into your tool.
   </Card>
-  <Card title="Bilingual structure" icon="heroicons:language">
-    Chinese + English sidebars match, so content stays maintainable.
+  <Card title="Troubleshoot fast" icon="heroicons:bug-ant">
+    Common issues are documented with direct fixes.
   </Card>
 </CardGrid>

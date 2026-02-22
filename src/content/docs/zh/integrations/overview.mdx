@@ -1,23 +1,38 @@
 ---
-title: 第三方接入总览（通用原则）
+title: 接入总览（先看这个）
 ---
 
-一句话：**只要第三方工具支持“OpenAI 兼容的 Base URL + API Key”，基本都能接到 su8 codes。**
+一句话：**你在工具里能填“Base URL + API Key”，基本就能接入 SU8 Codes。**
 
-你需要的还是那两个值：
-- Base URL：`https://su8.codes/codex/v1`
-- API Key：你的 su8 codes key
+## 你需要准备什么
 
-## 两种常见接口
+- Base URL：`https://www.su8.codes/codex/v1`
+- API Key：你在后台创建的 key
+- 模型名：不知道填啥就去 [模型列表](/zh/tools/models/) 复制
+
+## 先走最常用的两条路（重点）
+
+- Codex CLI：按这页一步步填就行  
+  - [Codex CLI（配置）](/zh/codex/configure/)
+- OpenClaw：配置文件里填几个字段就能用  
+  - [OpenClaw 接入](/zh/integrations/openclaw/)
+
+## 工具一般会用到的两个接口
 
 - 推荐：`/responses`（更“新”的写法）
 - 兼容：`/chat/completions`（很多第三方工具只支持这个）
 
-你可以先用这页验证两种都能跑通：
-- [跑通一次请求](/zh/codex/verify/)
+你可以先用下面任意一种方式验证“通不通”：
+- [在线 API 测试](/zh/tools/api-tester/)
+- [跑通一次请求（curl）](/zh/codex/verify/)
 
 ## 接入时最常见的坑
 
 1. **Base URL 少写了 `/codex/v1`**：结果一直 404。
 2. **模型名没对上**：先去 [模型列表](/zh/tools/models/) 复制。
 3. **工具只支持某个接口**：优先试 `/chat/completions` 兼容模式。
+
+## 下一步
+
+- 你用的是其它工具（Cline/Roo/Kilo/opencode 等）：先看 [字段通用说明](/zh/integrations/tools/)
+- 如果遇到报错：看 [常见错误排查](/zh/codex/troubleshooting/)

@@ -1,139 +1,37 @@
 ---
-title: Other tools
+title: Field reference
 ---
 
-su8 codes implements an OpenAI-compatible API. If a tool supports **OpenAI Compatible** (custom Base URL + API Key), you can usually connect it quickly.
+This page answers one thing: **when a tool asks for fields, what should you put there?**
 
-## Supported tools
+## One-line rule
 
-| Protocol | Base URL | Tools |
-| --- | --- | --- |
-| OpenAI compatible | `https://su8.codes/codex/v1` | Cline, Roo Code, Kilo Code, OpenClaw, opencode, etc. |
+- If the tool has **Base URL / Endpoint / API Base**: use `https://www.su8.codes/codex/v1`
+- If the tool has **API key / Token**: use your SU8 Codes key
+- If the tool has **Model / Model ID**: copy from [Models](/en/tools/models/)
 
-> Note: If a tool’s placeholder does **not** include `/v1` (e.g. it shows `https://api.openai.com`), use `https://su8.codes/codex` (remove `/v1/responses` from `https://su8.codes/codex/v1/responses`).
+> Watch out: some tools show placeholders without `/v1` (e.g. `https://api.openai.com`).  
+> Still use the full `https://www.su8.codes/codex/v1` to avoid 404s.
 
-## Notes
+## Field mapping (plain English)
 
-Before configuring a tool:
+- **Base URL**: where requests go
+- **API key**: your access key
+- **Model / Model ID**: which model to use
 
-1. Create an **API Key** in your su8 codes dashboard.
-2. Fill **Model / Model ID** with a model available to your account (copy from [Models](/en/tools/models/)).
+## Pages we keep most up-to-date
 
-Below are the exact fields to fill for each tool.
+Recommended:
+- [Codex configuration](/en/codex/configure/)
+- [OpenClaw integration](/en/integrations/openclaw/)
 
-## Cline
-
-### Install
-
-In VSCode, search **Cline** in Extensions and install it.
-
-### Configure (fields only)
-
-In Cline → Settings → API Configuration:
-
-- **API Provider**: OpenAI Compatible
-- **Base URL**: `https://su8.codes/codex/v1` (remove `/responses` from `https://su8.codes/codex/v1/responses`)
-- **API Key**: `<your su8 codes API key>`
-- **Model ID**: `<model id>`
-
-## Roo Code
-
-### Install
-
-In VSCode, search **Roo Code** in Extensions and install it.
-
-![Roo Code install image](/integrations/roo-code-install.png)
-
-### Configure (fields only)
-
-After installing, fill:
-
-- **API Provider**: OpenAI Compatible
-- **Base URL**: `https://su8.codes/codex/v1`
-- **API Key**: `<your su8 codes API key>`
-- **Model**: `<model id>`
-
-## Kilo Code
-
-### Install
-
-In VSCode, search **Kilo Code** in Extensions and install it.
-
-![Kilo Code install image](/integrations/kilo-code-install.png)
-
-### Configure (fields only)
-
-Choose “Use your own API key”, then fill:
-
-- **API Provider**: OpenAI Compatible
-- **Base URL**: `https://su8.codes/codex/v1`
-- **API Key**: `<your su8 codes API key>`
-- **Model**: `<model id>`
-
-## OpenClaw
-
-### Configure (fields only)
-
-OpenClaw is primarily configured via `~/.openclaw/openclaw.json`. For a custom provider, fill:
-
-- `baseUrl`: `https://su8.codes/codex/v1`
-- `apiKey`: `<your su8 codes API key>`
-- `api`: `openai-responses`
-- `models[].id`: `<model id>`
-
-Example (key fields only):
-
-```jsonc
-{
-  "models": {
-    "providers": {
-      "su8": {
-        "baseUrl": "https://su8.codes/codex/v1",
-        "apiKey": "<SU8_API_KEY>",
-        "api": "openai-responses",
-        "models": [{ "id": "<Model_Name>", "name": "<Model_Name>" }]
-      }
-    }
-  }
-}
-```
-
-## opencode
-
-### Configure (fields only)
-
-Edit:
-
-- `~/.config/opencode/opencode.json`
-
-Fill:
-
-- `options.baseURL`: `https://su8.codes/codex/v1`
-- `options.apiKey`: `<your su8 codes API key>`
-- `models`: add your model ids
-
-Example (key fields only):
-
-```jsonc
-{
-  "$schema": "https://opencode.ai/config.json",
-  "provider": {
-    "su8": {
-      "npm": "@ai-sdk/openai-compatible",
-      "name": "su8 codes",
-      "options": {
-        "baseURL": "https://su8.codes/codex/v1",
-        "apiKey": "<SU8_API_KEY>"
-      },
-      "models": {
-        "<Model_Name>": { "name": "<Model_Name>" }
-      }
-    }
-  }
-}
-```
+Other tools:
+- [Cline integration](/en/integrations/cline/)
+- [Roo Code integration](/en/integrations/roo-code/)
+- [Kilo Code integration](/en/integrations/kilo-code/)
+- [opencode integration](/en/integrations/opencode/)
 
 ## Quick verification
 
 - [API Tester](/en/tools/api-tester/)
-- If errors happen: [Troubleshooting](/en/codex/troubleshooting/)
+- If something fails: [Troubleshooting](/en/codex/troubleshooting/)

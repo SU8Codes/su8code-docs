@@ -1,12 +1,12 @@
-# su8 codes docs (Rspress)
+# SU8 Codes docs (Astro + Starlight + Theme Next)
 
 这是对外的文档站源码（部署到 `docs.su8.codes`）。
 
 ## 本地启动
 
 ```bash
-npm install
-npm run dev
+bun install
+bun run dev
 ```
 
 然后打开：
@@ -16,10 +16,18 @@ npm run dev
 ## 构建
 
 ```bash
-npm run build
+bun run build
 ```
 
 构建产物在 `dist/`，部署到 `https://docs.su8.codes/` 对应的静态目录即可。
+
+## 测试（本仓库的“自动检查”）
+
+```bash
+bun run test
+```
+
+它会做三件事：先做类型检查（TypeScript），再构建（build），最后用预览服务器跑一遍关键页面的冒烟检查（确保不会 404）。
 
 ## Cloudflare（推荐：docs.su8.codes）
 
@@ -27,5 +35,5 @@ npm run build
 
 Pages 项目配置（连接仓库后）：
 - Root directory：`.`
-- Build command：`npm run build`
+- Build command：`bun run build`
 - Output directory：`dist`

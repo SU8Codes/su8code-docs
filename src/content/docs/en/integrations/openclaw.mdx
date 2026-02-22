@@ -2,7 +2,7 @@
 title: OpenClaw integration
 ---
 
-OpenClaw can connect to OpenAI Responses-compatible gateways via a custom provider (works well with su8 codes).
+OpenClaw can connect to OpenAI Responses-compatible gateways via a custom provider (works well with SU8 Codes).
 
 ## What to fill in OpenClaw (fields only)
 
@@ -12,8 +12,8 @@ OpenClaw is usually configured via:
 
 Add (or edit) a custom provider and fill the key fields:
 
-- `baseUrl`: `https://su8.codes/codex/v1` (from `https://su8.codes/codex/v1/responses`, remove `/responses`)
-- `apiKey`: `<your su8 codes API key>`
+- `baseUrl`: `https://www.su8.codes/codex/v1` (from `https://www.su8.codes/codex/v1/responses`, remove `/responses`)
+- `apiKey`: `<your SU8 Codes API key>`
 - `api`: `openai-responses`
 - `models[].id`: `<model id>` (copy from [Models](/en/tools/models/))
 
@@ -24,8 +24,8 @@ Example (key fields only):
   models: {
     providers: {
       su8: {
-        baseUrl: "https://su8.codes/codex/v1",
-        apiKey: "<your su8 codes API key>",
+        baseUrl: "https://www.su8.codes/codex/v1",
+        apiKey: "<your SU8 Codes API key>",
         api: "openai-responses",
         models: [{ id: "<model id>", name: "<model id>" }]
       }

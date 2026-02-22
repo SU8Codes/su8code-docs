@@ -1,30 +1,9 @@
 {
+  "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
-    "lib": ["DOM", "ESNext"],
     "jsx": "react-jsx",
-    "target": "ES2022",
-    "noEmit": true,
-    "skipLibCheck": true,
-    "useDefineForClassFields": true,
-    "module": "ESNext",
-    "moduleDetection": "force",
-    "moduleResolution": "bundler",
-    "verbatimModuleSyntax": true,
-    "resolveJsonModule": true,
-    "allowImportingTsExtensions": true,
-    "noUncheckedSideEffectImports": true,
-    "isolatedModules": true,
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "baseUrl": ".",
-    "paths": {
-      "@astrojs/starlight/components": ["./src/components/starlight.tsx"]
-    }
+    "jsxImportSource": "react",
+    "types": ["astro/client"]
   },
-  "include": ["src", "rspress.config.ts"],
-  "mdx": {
-    "checkMdx": true
-  }
+  "include": ["src", "functions", ".astro/types.d.ts", "astro.config.ts"]
 }
-

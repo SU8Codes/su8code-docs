@@ -4,12 +4,12 @@ title: 配置（Base URL + API Key）
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
-这页只讲一件事：**把 Codex 的请求打到 su8 codes**。
+这页只讲一件事：**把 Codex 的请求打到 SU8 Codes**。
 
 ## 你需要的两个值
 
-- Base URL：`https://su8.codes/codex/v1`
-- API Key：你在 su8 codes 后台生成的 key
+- Base URL：`https://www.su8.codes/codex/v1`
+- API Key：你在 SU8 Codes 后台生成的 key
 
 ## 最通用的鉴权写法
 
@@ -71,7 +71,7 @@ disable_response_storage = true
 
 [model_providers.su8]
 name = "su8"
-base_url = "https://su8.codes/codex/v1"
+base_url = "https://www.su8.codes/codex/v1"
 wire_api = "responses"
 requires_openai_auth = true
 ```
@@ -84,7 +84,7 @@ requires_openai_auth = true
 }
 ```
 
-> 这里用 `OPENAI_API_KEY` 这个名字，是为了兼容很多工具的“习惯叫法”。key 本质还是你的 su8 codes key。
+> 这里用 `OPENAI_API_KEY` 这个名字，是为了兼容很多工具的“习惯叫法”。key 本质还是你的 SU8 Codes key。
 
 ### 3) 验证配置是否生效
 

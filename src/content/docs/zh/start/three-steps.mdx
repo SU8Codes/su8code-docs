@@ -1,0 +1,49 @@
+---
+title: 使用三步跑通
+description: 选套餐 → 拿 Key → 配工具并验证
+---
+
+这页只做一件事：**让你用最短时间跑通 SU8 Codes**。
+
+## 第 1 步：先把计费方式选对
+
+你只需要在这两种里选一个：
+- **套餐**：适合“每天都在用、想控预算”的人（先看这个）  
+  - [套餐说明](/zh/billing/plans/)
+- **按量（余额）**：适合“用量不稳定、先试试再说”的人  
+  - [按量付费（余额）](/zh/billing/pay-as-you-go/)
+
+## 第 2 步：创建一个 API Key（就是你的通行证）
+
+去 SU8 Codes 后台创建一个 key，然后先把它存在你自己的安全地方（比如密码管理器）。
+
+重要提醒：
+- 不要把 key 发群里、贴到截图里、写进代码仓库
+- 需要填到工具里的时候，再复制粘贴进去就行
+
+## 第 3 步：把 Base URL + Key 填进工具里，然后验证成功
+
+你只要记住两项：
+- Base URL：`https://www.su8.codes/codex/v1`
+- API Key：你刚创建的 key（请求头写法通常是 `Authorization: Bearer <你的API_KEY>`）
+
+### 怎么验证算成功
+
+你用下面任意一种方式看到“返回内容正常”，就算通了：
+- 最快：用文档站的 [在线 API 测试](/zh/tools/api-tester/)
+- 稍微硬核一点：用 [跑通一次请求（curl）](/zh/codex/verify/)
+
+### 最常见的 3 个坑（提前避开）
+
+1. **Base URL 少写了 `/codex/v1`**：大概率会 404。
+2. **Base URL 多写了 `/responses`**：有些工具会自己拼路径，结果变成重复路径。
+3. **模型名没对上**：直接去 [模型列表](/zh/tools/models/) 复制，不要手打。
+
+### 下一步：按你常用的工具走
+
+重点推荐你先看这两页（我们会把它们写得最细）：
+- [Codex CLI 接入](/zh/codex/configure/)
+- [OpenClaw 接入](/zh/integrations/openclaw/)
+
+其它工具也能接入的话，一般就是“OpenAI Compatible / 自定义 Base URL + API Key”那套：
+- [其他工具](/zh/integrations/tools/)

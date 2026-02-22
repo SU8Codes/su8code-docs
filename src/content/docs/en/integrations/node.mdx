@@ -5,14 +5,14 @@ title: Node.js integration (fetch)
 This is the most version-proof way: plain HTTP with `fetch`.
 
 Requirements:
-- `OPENAI_API_KEY` env var (your su8 codes key)
+- `OPENAI_API_KEY` env var (your SU8 Codes key)
 - Node.js 18+ (built-in `fetch`)
 
 ## Minimal runnable example
 
 ```js
 // node.mjs
-const baseURL = 'https://su8.codes/codex/v1';
+const baseURL = 'https://www.su8.codes/codex/v1';
 const apiKey = process.env.OPENAI_API_KEY;
 
 if (!apiKey) throw new Error('Missing OPENAI_API_KEY');

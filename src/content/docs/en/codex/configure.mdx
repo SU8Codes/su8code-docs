@@ -4,12 +4,12 @@ title: Configure (Base URL + API Key)
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
-This page is about one thing: **point Codex to su8 codes**.
+This page is about one thing: **point Codex to SU8 Codes**.
 
 ## The two values you need
 
-- Base URL: `https://su8.codes/codex/v1`
-- API Key: your su8 codes key
+- Base URL: `https://www.su8.codes/codex/v1`
+- API Key: your SU8 Codes key
 
 ## Auth header
 
@@ -65,7 +65,7 @@ disable_response_storage = true
 
 [model_providers.su8]
 name = "su8"
-base_url = "https://su8.codes/codex/v1"
+base_url = "https://www.su8.codes/codex/v1"
 wire_api = "responses"
 requires_openai_auth = true
 ```
@@ -78,7 +78,7 @@ requires_openai_auth = true
 }
 ```
 
-> We use the `OPENAI_API_KEY` name for compatibility. It is still your su8 codes key.
+> We use the `OPENAI_API_KEY` name for compatibility. It is still your SU8 Codes key.
 
 ### 3) Verify
 

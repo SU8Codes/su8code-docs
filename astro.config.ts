@@ -4,63 +4,9 @@ import react from '@astrojs/react';
 import starlight from '@astrojs/starlight';
 import starlightThemeNext from 'starlight-theme-next';
 import type { Plugin } from 'vite';
+import { localeCookieName, pickLocale } from './functions/_shared/locale';
 
 function devRootRedirect(): Plugin {
-  const cookieName = 'su8_locale';
-
-  function parseCookie(header: string | undefined) {
-    const out: Record<string, string> = {};
-    if (!header) return out;
-    for (const part of header.split(';')) {
-      const idx = part.indexOf('=');
-      if (idx <= 0) continue;
-      const k = part.slice(0, idx).trim();
-      const v = part.slice(idx + 1).trim();
-      if (!k) continue;
-      out[k] = v;
-    }
-    return out;
-  }
-
-  function pickLocale(params: { cookie?: string; acceptLanguage?: string }) {
-    const cookies = parseCookie(params.cookie);
-    const fromCookie = String(cookies[cookieName] ?? '').toLowerCase();
-    if (fromCookie === 'zh' || fromCookie === 'en') return fromCookie;
-
-    const raw = String(params.acceptLanguage ?? '').trim();
-    if (!raw) return 'en';
-
-    type Range = { lang: string; q: number; index: number };
-    const ranges: Range[] = [];
-
-    raw.split(',').forEach((part, index) => {
-      const segments = part.split(';');
-      const lang = segments[0]?.trim().toLowerCase();
-      if (!lang) return;
-
-      let q = 1;
-      for (let i = 1; i < segments.length; i++) {
-        const param = segments[i]?.trim().toLowerCase();
-        if (!param?.startsWith('q=')) continue;
-        const parsed = Number.parseFloat(param.slice(2));
-        if (!Number.isNaN(parsed) && parsed >= 0 && parsed <= 1) q = parsed;
-        break;
-      }
-
-      ranges.push({ lang, q, index });
-    });
-
-    ranges.sort((a, b) => (b.q !== a.q ? b.q - a.q : a.index - b.index));
-
-    for (const { lang } of ranges) {
-      if (lang === '*') continue;
-      if (lang.startsWith('zh')) return 'zh';
-      if (lang.startsWith('en')) return 'en';
-    }
-
-    return 'en';
-  }
-
   return {
     name: 'dev-root-redirect',
     apply: 'serve',
@@ -70,8 +16,10 @@ function devRootRedirect(): Plugin {
         if (url !== '/' && url !== '/?' && !url.startsWith('/?')) return next();
 
         const locale = pickLocale({
-          cookie: req?.headers?.cookie,
-          acceptLanguage: req?.headers?.['accept-language']
+          cookieHeader: req?.headers?.cookie,
+          acceptLanguageHeader: req?.headers?.['accept-language'],
+          cookieName: localeCookieName,
+          defaultLocale: 'en'
         });
 
         const requestUrl = new URL(url, 'http://localhost');
@@ -79,8 +27,8 @@ function devRootRedirect(): Plugin {
 
         res.statusCode = 302;
         res.setHeader('Location', `/${locale}/${search}`);
-        if (!String(req?.headers?.cookie ?? '').includes(`${cookieName}=`)) {
-          res.setHeader('Set-Cookie', `${cookieName}=${locale}; Max-Age=31536000; Path=/; SameSite=Lax`);
+        if (!String(req?.headers?.cookie ?? '').includes(`${localeCookieName}=`)) {
+          res.setHeader('Set-Cookie', `${localeCookieName}=${locale}; Max-Age=31536000; Path=/; SameSite=Lax`);
         }
         res.end();
       });

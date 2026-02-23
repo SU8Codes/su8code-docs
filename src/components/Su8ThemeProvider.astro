@@ -8,24 +8,34 @@
 		const storageKey = 'starlight-theme';
 		const localeCookieKey = 'su8_locale';
 
-		// Force light theme always.
-		document.documentElement.dataset.theme = 'light';
-		try {
-			localStorage.setItem(storageKey, 'light');
-		} catch {
-			// ignore
+		function apply() {
+			// Force light theme always.
+			document.documentElement.dataset.theme = 'light';
+			try {
+				localStorage.setItem(storageKey, 'light');
+			} catch {
+				// ignore
+			}
+
+			// Remember locale as a cookie so `/` can redirect without a client-side interstitial page.
+			try {
+				const match = window.location.pathname.match(/^\/(en|zh)(\/|$)/);
+				if (match) {
+					const locale = match[1];
+					const secure = window.location.protocol === 'https:' ? '; Secure' : '';
+					document.cookie = `${localeCookieKey}=${locale}; Max-Age=31536000; Path=/; SameSite=Lax${secure}`;
+				}
+			} catch {
+				// ignore
+			}
 		}
 
-		// Remember locale as a cookie so `/` can redirect without a client-side interstitial page.
-		try {
-			const match = window.location.pathname.match(/^\/(en|zh)(\/|$)/);
-			if (match) {
-				const locale = match[1];
-				const secure = window.location.protocol === 'https:' ? '; Secure' : '';
-				document.cookie = `${localeCookieKey}=${locale}; Max-Age=31536000; Path=/; SameSite=Lax${secure}`;
-			}
-		} catch {
-			// ignore
+		apply();
+		// When Astro view transitions are enabled, client-side navigations swap the `<html>` attributes.
+		// Re-apply our forced theme after each swap to avoid the page returning to dark mode.
+		if (!window.__su8ThemeAfterSwapWired) {
+			window.__su8ThemeAfterSwapWired = true;
+			document.addEventListener('astro:after-swap', apply);
 		}
 
 		// Keep this global so other Starlight code (or future upgrades) won’t crash.

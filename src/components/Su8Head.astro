@@ -1,0 +1,64 @@
+---
+import DefaultHead from '@astrojs/starlight/components/Head.astro';
+import { ViewTransitions } from 'astro:transitions';
+---
+
+<DefaultHead />
+<ViewTransitions />
+
+<script is:inline>
+	(() => {
+		if (window.__su8PrefetchWired) return;
+		window.__su8PrefetchWired = true;
+
+		// Lightweight prefetch on hover to reduce perceived flicker during navigation.
+		// Works both for full reloads and for Astro view transitions.
+		const prefetched = new Set();
+
+		function canPrefetch(url) {
+			if (!url) return false;
+			if (url.origin !== window.location.origin) return false;
+			if (url.pathname === window.location.pathname && url.search === window.location.search) return false;
+			return true;
+		}
+
+		function prefetchHref(href) {
+			try {
+				const url = new URL(href, window.location.href);
+				if (!canPrefetch(url)) return;
+				const key = url.pathname + url.search;
+				if (prefetched.has(key)) return;
+				prefetched.add(key);
+				const link = document.createElement('link');
+				link.rel = 'prefetch';
+				link.as = 'document';
+				link.href = url.toString();
+				document.head.appendChild(link);
+			} catch {
+				// ignore
+			}
+		}
+
+		function wire() {
+			document.addEventListener(
+				'pointerover',
+				(e) => {
+					const target = e.target;
+					if (!(target instanceof Element)) return;
+					const a = target.closest('a[href]');
+					if (!(a instanceof HTMLAnchorElement)) return;
+					if (a.target === '_blank') return;
+					if (a.hasAttribute('download')) return;
+					prefetchHref(a.href);
+				},
+				{ passive: true }
+			);
+		}
+
+		if (document.readyState === 'loading') {
+			document.addEventListener('DOMContentLoaded', wire, { once: true });
+		} else {
+			wire();
+		}
+	})();
+</script>

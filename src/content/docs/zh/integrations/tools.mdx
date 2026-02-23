@@ -1,37 +1,24 @@
 ---
-title: 字段通用说明
+title: 其他工具（字段通用说明）
+description: 只要能填 Base URL + API Key，一般都能接入
 ---
 
-这页只讲一件事：**当工具让你填一堆字段时，你到底该填什么**。
+一句话：只要你的工具里能填 **Base URL + API Key**，一般就能接入 SU8 Codes。
 
-## 一句话规则
+## 你需要填什么
 
-- 工具里只要有 **Base URL / Endpoint / API Base** 这种字段：填 `https://www.su8.codes/codex/v1`
-- 工具里只要有 **API Key / Token**：填你的 SU8 Codes key
-- 工具里只要有 **Model / Model ID**：填你账号可用的模型名（去 [模型列表](/zh/tools/models/) 复制）
+- Base URL：`https://www.su8.codes/codex/v1`
+- API Key：你在 SU8 官网创建的令牌
 
-> 小心：有些工具的示例不带 `/v1`（比如示例是 `https://api.openai.com`）。  
-> 你照样填完整的 `https://www.su8.codes/codex/v1`，不要自己脑补删路径。
+## 对应工具教程
 
-## 常见字段对照（按人话）
-
-- **Base URL**：就是“请求发到哪里”
-- **API Key**：就是“你的通行证”
-- **Model / Model ID**：就是“你要用哪个模型”
-
-## 先别到处找教程：我们只重点维护这些页面
-
-重点（建议先看）：
-- [Codex CLI（配置）](/zh/codex/configure/)
-- [OpenClaw 接入](/zh/integrations/openclaw/)
-
-其它工具：
 - [Cline 接入](/zh/integrations/cline/)
 - [Roo Code 接入](/zh/integrations/roo-code/)
 - [Kilo Code 接入](/zh/integrations/kilo-code/)
 - [opencode 接入](/zh/integrations/opencode/)
 
-## 配完怎么确认是通的
+## 建议先验证（最稳）
 
-- 最快自检：[在线 API 测试](/zh/tools/api-tester/)
-- 报错排查：[常见错误排查](/zh/codex/troubleshooting/)
+- [在线 API 测试](/zh/tools/api-tester/)
+- [模型列表](/zh/tools/models/)
+

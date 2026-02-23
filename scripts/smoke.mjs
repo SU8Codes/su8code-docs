@@ -218,8 +218,10 @@ async function main() {
       { path: '/en/tools/api-tester/', mustContain: ['API Tester', 'API Key', 'type=\"password\"'] },
       { path: '/zh/tools/models/', mustContain: ['模型列表', '加载模型', 'type=\"password\"'] },
       { path: '/en/tools/models/', mustContain: ['Models', '加载模型', 'type=\"password\"'] },
-      { path: '/zh/codex/install/' },
-      { path: '/en/codex/install/' }
+      { path: '/zh/integrations/codex-cli/' },
+      { path: '/en/integrations/codex-cli/' },
+      { path: '/zh/integrations/sdks/' },
+      { path: '/en/integrations/sdks/' }
     ];
 
     const failed = [];

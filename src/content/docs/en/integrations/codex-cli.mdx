@@ -1,0 +1,100 @@
+---
+title: Codex Integration
+description: Install and configure Codex CLI, VSCode Extension, or Desktop App
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+Whether you are using the **Codex CLI**, the **Official VSCode Extension**, or the **Codex Desktop App**, their underlying configuration files and core mechanics are **identical and fully interoperable**.
+
+You only need to configure the authentication file once, and all three clients will be seamlessly connected!
+
+## Step 1: Install a Client (Choose One)
+
+<Tabs>
+  <TabItem label="Codex CLI (Terminal)">
+    If you prefer terminal operations, ensure `Node.js` is installed on your machine, then run:
+    ```bash
+    npm i -g @openai/codex
+    ```
+    Verify the installation: `codex --version`
+  </TabItem>
+
+  <TabItem label="VSCode Extension">
+    Search for `codex` directly in the VSCode extensions marketplace, or visit the official link via your browser:  
+    [View in VSCode Marketplace](https://marketplace.visualstudio.com/items?itemName=openai.chatgpt)
+  </TabItem>
+
+  <TabItem label="Codex App (Desktop)">
+    You can download the standalone official desktop application for a full-screen code generation and review experience:  
+    [Official Codex App Download](https://developers.openai.com/codex/quickstart?setup=app)
+  </TabItem>
+</Tabs>
+
+---
+
+## Step 2: Locate the Configuration Directory
+
+Regardless of whether you are on Windows or macOS/Linux, all three official clients read from the `.codex` directory located in your system's user folder.
+
+Open your terminal or command prompt (CMD) and run the following command to **navigate directly to this directory**:
+
+<Tabs>
+  <TabItem label="Windows">
+    Run the following in CMD or PowerShell to automatically create (if missing) and open the folder in File Explorer:
+    ```bat
+    mkdir "%USERPROFILE%\.codex"
+    start "" "%USERPROFILE%\.codex"
+    ```
+  </TabItem>
+
+  <TabItem label="macOS / Linux">
+    Run this in your terminal to create and open the folder in Finder:
+    ```bash
+    mkdir -p "$HOME/.codex"
+    open "$HOME/.codex"
+    ```
+    *(For Linux, replace `open` with `xdg-open`)*
+  </TabItem>
+</Tabs>
+
+---
+
+## Step 3: Write Configuration Parameters
+
+Inside the `.codex` folder you just opened, create the following two core plain text files (do not add a `.txt` extension):
+
+<Tabs>
+  <TabItem label="📄 config.toml (Endpoint Routing)">
+    This file instructs all clients to route their traffic to SU8.Codes:
+    ```toml
+    model_provider = "su8"
+    model = "gpt-5.2"
+    # Or replace with any model from the Supported Models list, like gpt-5.3-codex
+    network_access = "enabled"
+    disable_response_storage = true
+    model_verbosity = "high"
+
+    [model_providers.su8]
+    name = "su8"
+    base_url = "https://www.su8.codes/codex/v1"
+    wire_api = "responses"
+    requires_openai_auth = true
+    ```
+  </TabItem>
+
+  <TabItem label="🔑 auth.json (Authentication)">
+    This file stores the key you generated in the SU8 dashboard:
+    ```json
+    {
+      "OPENAI_API_KEY": "<Paste_your_sk-xxx_API_Key_from_SU8_Here>"
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+---
+
+> **⚠️ Critical Configuration Note:**
+> - **Any changes made to these two files require a complete restart of the client to take effect (reload VSCode, or kill the codex process in the terminal with Ctrl+C and rerun it).**
+> - If the VSCode extension throws continuous errors, try running `codex` in the terminal first. This helps determine if the issue is network-related or specific to the IDE.

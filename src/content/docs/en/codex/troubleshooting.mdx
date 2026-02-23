@@ -26,6 +26,13 @@ Try:
 - retry with backoff (1s/2s/4s)
 - add jitter if you have loops
 
+## 502 / 504 (Gateway Timeout)
+Usually caused by non-streaming requests waiting too long for a response, hitting the mandatory Cloudflare/CDN 100-second idle timeout.
+
+Try:
+- **Recommended**: Always enable streaming by setting `"stream": true` in your code! Streaming bypasses the CDN's idle timeout by chunks returning to your user immediately.
+- If you absolutely must use non-streaming, try to shorten your prompts or use a faster model.
+
 ## 5xx
 Temporary server-side issues.
 

@@ -6,11 +6,6 @@ type ModelItem = {
 };
 
 function getApiBaseUrl() {
-  if (typeof window === 'undefined') return 'https://www.su8.codes/codex/v1';
-  const host = window.location.hostname;
-  const isLocal = host === 'localhost' || host === '127.0.0.1';
-  if (isLocal) return '/codex/v1';
-  if (host === 'su8.codes' || host === 'www.su8.codes') return '/codex/v1';
   return 'https://www.su8.codes/codex/v1';
 }
 
@@ -34,6 +29,20 @@ function normalizeModels(payload: unknown): string[] {
 }
 
 export default function ModelsList() {
+  const isZh = typeof window !== 'undefined' ? window.location.pathname.startsWith('/zh') : true;
+
+  const t = {
+    apiKeyPlaceholder: isZh ? '粘贴你的 API Key（不会被保存）' : 'Paste your API Key (will not be saved)',
+    loadButtonLoading: isZh ? '加载中…' : 'Loading...',
+    loadButton: isZh ? '加载模型' : 'Load Models',
+    errorTitle: isZh ? '错误' : 'Error',
+    copyBaseUrl: isZh ? '复制 Base URL' : 'Copy Base URL',
+    copyBtn: isZh ? '复制' : 'Copy',
+    errorParse: isZh 
+      ? '接口返回成功了，但没有解析到模型列表。你可以把返回内容贴给我，我来适配格式。'
+      : 'JSON parsed successfully but no models were detected. Please provide the response format.'
+  };
+
   const [apiKey, setApiKey] = useState('');
   const [loading, setLoading] = useState(false);
   const [models, setModels] = useState<string[]>([]);
@@ -51,12 +60,12 @@ export default function ModelsList() {
       });
       if (!response.ok) {
         const text = await response.text().catch(() => '');
-        throw new Error(`请求失败：HTTP ${response.status}\n\n${text}`);
+        throw new Error(isZh ? `请求失败：HTTP ${response.status}\n\n${text}` : `Request failed: HTTP ${response.status}\n\n${text}`);
       }
       const json = await response.json();
       const list = normalizeModels(json);
       if (!list.length) {
-        throw new Error('接口返回成功了，但没有解析到模型列表。你可以把返回内容贴给我，我来适配格式。');
+        throw new Error(t.errorParse);
       }
       setModels(list);
     } catch (e) {
@@ -77,7 +86,7 @@ export default function ModelsList() {
           <input
             value={apiKey}
             onChange={(e) => setApiKey(e.target.value)}
-            placeholder="粘贴你的 API Key（不会被保存）"
+            placeholder={t.apiKeyPlaceholder}
             type="password"
             style={{
               width: '100%',
@@ -98,13 +107,13 @@ export default function ModelsList() {
               whiteSpace: 'nowrap'
             }}
           >
-            {loading ? '加载中…' : '加载模型'}
+            {loading ? t.loadButtonLoading : t.loadButton}
           </button>
         </div>
 
         {error ? (
           <div style={{ border: '1px solid rgba(220,38,38,0.25)', background: 'rgba(220,38,38,0.06)', borderRadius: 12, padding: 12 }}>
-            <div style={{ fontWeight: 700, marginBottom: 6 }}>错误</div>
+            <div style={{ fontWeight: 700, marginBottom: 6 }}>{t.errorTitle}</div>
             <pre style={{ margin: 0, whiteSpace: 'pre-wrap' }}>{error}</pre>
           </div>
         ) : null}
@@ -122,7 +131,7 @@ export default function ModelsList() {
                   cursor: 'pointer'
                 }}
               >
-                复制 Base URL
+                {t.copyBaseUrl}
               </button>
             </div>
 
@@ -153,7 +162,7 @@ export default function ModelsList() {
                       whiteSpace: 'nowrap'
                     }}
                   >
-                    复制
+                    {t.copyBtn}
                   </button>
                 </div>
               ))}

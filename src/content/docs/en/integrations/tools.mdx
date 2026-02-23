@@ -1,37 +1,24 @@
 ---
-title: Field reference
+title: Other tools (field reference)
+description: If your tool supports “Base URL + API key”, start here
 ---
 
-This page answers one thing: **when a tool asks for fields, what should you put there?**
+In short: if your tool lets you set **Base URL + API key**, it can usually work with SU8 Codes.
 
-## One-line rule
+## What to fill in
 
-- If the tool has **Base URL / Endpoint / API Base**: use `https://www.su8.codes/codex/v1`
-- If the tool has **API key / Token**: use your SU8 Codes key
-- If the tool has **Model / Model ID**: copy from [Models](/en/tools/models/)
+- Base URL: `https://www.su8.codes/codex/v1`
+- API key: your key from the SU8 website
 
-> Watch out: some tools show placeholders without `/v1` (e.g. `https://api.openai.com`).  
-> Still use the full `https://www.su8.codes/codex/v1` to avoid 404s.
+## Tool guides
 
-## Field mapping (plain English)
+- [Cline](/en/integrations/cline/)
+- [Roo Code](/en/integrations/roo-code/)
+- [Kilo Code](/en/integrations/kilo-code/)
+- [opencode](/en/integrations/opencode/)
 
-- **Base URL**: where requests go
-- **API key**: your access key
-- **Model / Model ID**: which model to use
-
-## Pages we keep most up-to-date
-
-Recommended:
-- [Codex configuration](/en/codex/configure/)
-- [OpenClaw integration](/en/integrations/openclaw/)
-
-Other tools:
-- [Cline integration](/en/integrations/cline/)
-- [Roo Code integration](/en/integrations/roo-code/)
-- [Kilo Code integration](/en/integrations/kilo-code/)
-- [opencode integration](/en/integrations/opencode/)
-
-## Quick verification
+## Verify first (recommended)
 
 - [API Tester](/en/tools/api-tester/)
-- If something fails: [Troubleshooting](/en/codex/troubleshooting/)
+- [Models](/en/tools/models/)
+

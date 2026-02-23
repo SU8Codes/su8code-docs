@@ -1,0 +1,122 @@
+---
+title: 开发者 SDK 接入 (Node/Python)
+description: 使用代码直接发起 HTTP 请求调用 SU8.Codes 模型网关
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+如果您不需要借助 IDE 插件，而是想在自己的脚本/服务中直接调用大模型，最稳定、最免流媒体依赖的方式就是**直接构造标准的 HTTP 请求**。
+
+我们的网关完全兼容 OpenAI 的请求格式，您只需要准备：
+- `OPENAI_API_KEY` 环境变量（填入您在 SU8.Codes 获取的 Key）。
+- 确保请求终端能够连接公网（由于我们在国内布放了分发节点，您**无需**再为您本地的代码环境配置繁琐的 HTTP Proxy）。
+
+下面提供两种最常用语言的最小可行性演示（无需安装官方庞大的 `openai` 依赖库，零负担启动）。
+
+<Tabs>
+  <TabItem label="Node.js (Fetch)">
+    这是最通用、最不挑版本的写法，直接利用 Node.js 18+ 内置的 `fetch` 进行调用。
+
+    ```javascript
+    // demo.mjs
+    const baseURL = 'https://www.su8.codes/codex/v1';
+    const apiKey = process.env.OPENAI_API_KEY;
+
+    if (!apiKey) {
+      throw new Error('未检测到 OPENAI_API_KEY 环境变量');
+    }
+
+    async function main() {
+      // 此处请求我们专有的 /responses 代理端点，您也可以换成标准的 /chat/completions
+      const resp = await fetch(`${baseURL}/responses`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${apiKey}`
+        },
+        body: JSON.stringify({
+          model: 'gpt-5.2',
+          reasoning_effort: 'high', // 可选: low / medium / high / xhigh (适用于支持思考强度的模型)
+          instructions: '你是一个经过严格训练的终极编程助手', // 也就是 System Prompt
+          stream: true, // 强烈建议开启流式，防止长回复被 Cloudflare 拦截报 502
+          input: [
+            {
+              type: 'message',
+              role: 'user',
+              content: [{ type: 'input_text', text: '你好，测试网关连通性。' }]
+            }
+          ]
+        })
+      });
+
+      if (!resp.ok) {
+        const text = await resp.text();
+        throw new Error(`${resp.status} ${resp.statusText}\n${text}`);
+      }
+      
+      console.log('✅ 请求成功返回：\n');
+      const reader = resp.body.getReader();
+      const decoder = new TextDecoder();
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        process.stdout.write(decoder.decode(value, { stream: true }));
+      }
+      console.log('\n');
+    }
+
+    main();
+    ```
+  </TabItem>
+
+  <TabItem label="Python (Requests)">
+    同样走最通用的 HTTP 调用，稳定且不绕弯。您只需确保安装了 `requests` 库 (`pip install requests`)。
+
+    ```python
+    # demo.py
+    import os
+    import requests
+
+    base_url = "https://www.su8.codes/codex/v1"
+    api_key = os.environ.get("OPENAI_API_KEY")
+
+    if not api_key:
+        raise RuntimeError("未检测到 OPENAI_API_KEY 环境变量")
+
+    # 注意增加合理的 timeout，防止单次请求死锁
+    resp = requests.post(
+        f"{base_url}/responses",
+        headers={
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {api_key}",
+        },
+        json={
+            "model": "gpt-5.2",
+            "reasoning_effort": "high", # 可选: low / medium / high / xhigh (适用于支持思考强度的模型)
+            "instructions": "你是一个经过严格训练的终极编程助手", # 也就是 System Prompt
+            "stream": True, # 强烈建议开启流式，防止长回复被 Cloudflare 拦截报 502
+            "input": [
+                {
+                    "type": "message",
+                    "role": "user",
+                    "content": [{"type": "input_text", "text": "你好，测试网关连通性。"}],
+                }
+            ],
+        },
+        stream=True,
+        timeout=60,
+    )
+
+    resp.raise_for_status()
+    print("✅ 请求成功返回：\n")
+    for line in resp.iter_lines():
+        if line:
+            print(line.decode('utf-8'))
+    ```
+  </TabItem>
+</Tabs>
+
+## 找不到合适的模型名？
+
+如果您在代码中不知道该传入何种模型标识（如 `model: 'xxx'`），请随时在此查阅最新的可用列表并直接复制：
+👉 **[全站支持模型统揽概览](/zh/tools/models/)**

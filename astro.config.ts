@@ -97,6 +97,7 @@ export default defineConfig({
         en: { label: 'English', lang: 'en' }
       },
       components: {
+        Head: './src/components/Su8Head.astro',
         ThemeProvider: './src/components/Su8ThemeProvider.astro',
         ThemeSelect: './src/components/Su8ThemeDisabled.astro',
         Header: './src/components/Su8Header.astro',

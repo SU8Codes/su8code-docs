@@ -44,6 +44,7 @@ const sidebar = [
     items: [
       { slug: 'index', label: '首页与介绍', translations: { en: 'Home & Intro' } },
       { slug: 'about/overview', label: '平台服务概要', translations: { en: 'About' } },
+      { slug: 'about/community', label: '社区交流', translations: { en: 'Community' } },
       { slug: 'start/three-steps', label: '获取密钥与快速跑通', translations: { en: 'Quickstart' } }
     ]
   },

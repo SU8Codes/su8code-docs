@@ -8,6 +8,9 @@ import { ViewTransitions } from 'astro:transitions';
 
 <script is:inline>
 	(() => {
+		if (window.__su8PrefetchWired) return;
+		window.__su8PrefetchWired = true;
+
 		// Lightweight prefetch on hover to reduce perceived flicker during navigation.
 		// Works both for full reloads and for Astro view transitions.
 		const prefetched = new Set();
@@ -59,4 +62,3 @@ import { ViewTransitions } from 'astro:transitions';
 		}
 	})();
 </script>
-

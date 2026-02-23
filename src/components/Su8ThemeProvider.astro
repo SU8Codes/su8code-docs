@@ -33,7 +33,10 @@
 		apply();
 		// When Astro view transitions are enabled, client-side navigations swap the `<html>` attributes.
 		// Re-apply our forced theme after each swap to avoid the page returning to dark mode.
-		document.addEventListener('astro:after-swap', apply);
+		if (!window.__su8ThemeAfterSwapWired) {
+			window.__su8ThemeAfterSwapWired = true;
+			document.addEventListener('astro:after-swap', apply);
+		}
 
 		// Keep this global so other Starlight code (or future upgrades) won’t crash.
 		window.StarlightThemeProvider = {

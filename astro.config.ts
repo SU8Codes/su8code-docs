@@ -37,113 +37,38 @@ function devRootRedirect(): Plugin {
 }
 
 const sidebar = [
+
   {
-    label: '介绍 + 套餐 + 三步',
-    translations: { en: 'Intro + Billing + 3 steps' },
+    label: '开始使用',
+    translations: { en: 'Getting Started' },
     items: [
-      {
-        slug: 'about/overview',
-        label: '介绍自己（我们是谁）',
-        translations: { en: 'About SU8 Codes' }
-      },
-      {
-        label: '套餐说明',
-        translations: { en: 'Billing' },
-        items: [
-          {
-            slug: 'billing/plans',
-            label: '套餐（适合只用 Codex）',
-            translations: { en: 'Plans (best for Codex-only)' }
-          },
-          {
-            slug: 'billing/pay-as-you-go',
-            label: '按量付费（余额）',
-            translations: { en: 'Pay-as-you-go (balance)' }
-          },
-          {
-            slug: 'billing/reconciliation',
-            label: '对账与常见误会',
-            translations: { en: 'Reconciliation & common misconceptions' }
-          }
-        ]
-      },
-      {
-        slug: 'start/three-steps',
-        label: '使用三步跑通',
-        translations: { en: '3-step quickstart' }
-      },
-      {
-        label: '工具箱',
-        translations: { en: 'Tools' },
-        items: [
-          { slug: 'tools/api-tester', label: '在线 API 测试', translations: { en: 'API Tester' } },
-          { slug: 'tools/models', label: '模型列表', translations: { en: 'Models' } }
-        ]
-      },
-      {
-        label: '排障与稳定',
-        translations: { en: 'Troubleshooting' },
-        items: [
-          { slug: 'codex/troubleshooting', label: '常见错误排查', translations: { en: 'Troubleshooting' } },
-          {
-            slug: 'codex/stability-and-security',
-            label: '稳定与安全',
-            translations: { en: 'Stability & security' }
-          }
-        ]
-      }
+      { slug: 'index', label: '首页与介绍', translations: { en: 'Home & Intro' } },
+      { slug: 'about/overview', label: '平台服务概要', translations: { en: 'About' } },
+      { slug: 'start/three-steps', label: '获取密钥与快速跑通', translations: { en: 'Quickstart' } }
     ]
   },
   {
-    label: '可接入的程序',
+    label: '核心接入指南',
     translations: { en: 'Integrations' },
     items: [
-      {
-        slug: 'integrations/overview',
-        label: '接入总览（先看这个）',
-        translations: { en: 'Integrations overview' }
-      },
-      {
-        label: 'Codex CLI（重点）',
-        translations: { en: 'Codex CLI (recommended)' },
-        items: [
-          { slug: 'codex/install', label: '安装 Codex（准备工作）', translations: { en: 'Install Codex (prep)' } },
-          {
-            slug: 'codex/configure',
-            label: '配置（Base URL + API Key）',
-            translations: { en: 'Configure (Base URL + API Key)' }
-          },
-          {
-            slug: 'codex/verify',
-            label: '跑通一次请求（curl + 在线测试）',
-            translations: { en: 'Make your first request (curl + web tester)' }
-          }
-        ]
-      },
-      {
-        slug: 'integrations/openclaw',
-        label: 'OpenClaw 接入（重点）',
-        translations: { en: 'OpenClaw integration' }
-      },
-      {
-        label: '其他工具',
-        translations: { en: 'Other tools' },
-        items: [
-          { slug: 'integrations/cline', label: 'Cline 接入', translations: { en: 'Cline integration' } },
-          { slug: 'integrations/roo-code', label: 'Roo Code 接入', translations: { en: 'Roo Code integration' } },
-          { slug: 'integrations/kilo-code', label: 'Kilo Code 接入', translations: { en: 'Kilo Code integration' } },
-          { slug: 'integrations/opencode', label: 'opencode 接入', translations: { en: 'opencode integration' } },
-          { slug: 'integrations/tools', label: '字段通用说明', translations: { en: 'Field reference' } }
-        ]
-      },
-      {
-        label: '自己写代码接入',
-        translations: { en: 'SDK integration' },
-        items: [
-          { slug: 'integrations/node', label: 'Node.js 接入（fetch）', translations: { en: 'Node.js integration (fetch)' } },
-          { slug: 'integrations/python', label: 'Python 接入（requests）', translations: { en: 'Python integration (requests)' } }
-        ]
-      }
+      { slug: 'integrations/overview', label: '手册总览 (第一步)', translations: { en: 'Overview (Required)' } },
+      { slug: 'integrations/codex-cli', label: 'Codex', translations: { en: 'Codex' } },
+      { slug: 'integrations/openclaw', label: 'OpenClaw', translations: { en: 'OpenClaw' } },
+      { slug: 'integrations/roo-code', label: 'Roo Code', translations: { en: 'Roo Code' } },
+      { slug: 'integrations/cline', label: 'Cline', translations: { en: 'Cline' } },
+      { slug: 'integrations/kilo-code', label: 'Kilo Code', translations: { en: 'Kilo Code' } },
+      { slug: 'integrations/opencode', label: 'opencode', translations: { en: 'opencode' } },
+      { slug: 'integrations/sdks', label: '开发者 SDK (Node/Python)', translations: { en: 'SDKs' } }
+    ]
+  },
+  {
+    label: '参考与支持',
+    translations: { en: 'References & Support' },
+    items: [
+      { slug: 'tools/models', label: '全站支持模型聚合', translations: { en: 'Supported Models' } },
+      { slug: 'tools/api-tester', label: '在线 API 可视测试器', translations: { en: 'API Tester' } },
+      { slug: 'codex/stability-and-security', label: '可用性承诺与安全保障', translations: { en: 'Stability & Security' } },
+      { slug: 'codex/troubleshooting', label: '网络排错与错误速查', translations: { en: 'Troubleshooting FAQ' } }
     ]
   }
 ];
@@ -155,7 +80,10 @@ export default defineConfig({
   outDir: './dist',
   integrations: [
     starlight({
-      title: 'SU8 Codes 官方文档',
+      title: {
+        zh: 'SU8 Codes 官方文档',
+        en: 'SU8 Codes Docs'
+      },
       description: 'Codex API gateway docs',
       favicon: '/favicon.ico',
       logo: {
@@ -182,14 +110,6 @@ export default defineConfig({
     react()
   ],
   vite: {
-    plugins: [devRootRedirect()],
-    server: {
-      proxy: {
-        '/codex/v1': {
-          target: 'https://www.su8.codes',
-          changeOrigin: true
-        }
-      }
-    }
+    plugins: [devRootRedirect()]
   }
 });

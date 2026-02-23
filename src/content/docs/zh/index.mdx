@@ -1,30 +1,34 @@
 ---
-title: SU8 Codes 文档
-description: Codex API 中转服务文档（含在线测试）
+title: SU8.Codes 文档
+description: 极简接入，极致稳定：企业级 AI 编码接口分发网关
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
 
 <div className="su8-hero">
-  <div className="su8-hero__badge">Codex Gateway</div>
-  <h1 className="su8-hero__title">SU8 Codes 文档</h1>
+  <div className="su8-hero__badge">专为高频 AI 编码特化化</div>
+  <h1 className="su8-hero__title">SU8.Codes</h1>
   <p className="su8-hero__desc">
-    目标就一个：让你<strong>三步跑通</strong>，并且用得<strong>稳</strong>（可用性目标 <strong>99.9%</strong>）。
+    <strong>免代理直连、防断流、极致性价比</strong>的 AI 编程接口分发网关。专为满血运行 <strong>OpenClaw / Roo Code / Cline</strong> 等重度消耗 IDE 插件而生。
   </p>
+  
   <div className="su8-hero__actions">
-    <a className="su8-btn su8-btn--primary" href="/zh/start/three-steps/">使用三步跑通</a>
-    <a className="su8-btn su8-btn--ghost" href="/zh/integrations/overview/">接入 Codex / OpenClaw</a>
+    <a className="su8-btn su8-btn--primary" href="/zh/start/three-steps/">获取 Key 并跑通测试 &rarr;</a>
+    <a className="su8-btn su8-btn--ghost" href="/zh/integrations/overview/">接入方案与 IDE 插件配置</a>
   </div>
 </div>
 
-<CardGrid>
-  <Card title="一个入口" icon="heroicons:shield-check">
-    你只要记住一个 Base URL：<code>https://www.su8.codes/codex/v1</code>。
+<CardGrid stagger>
+  <Card title="极速直连，告别超时" icon="rocket">
+    专线级网络底层。**无需配置任何本地 Proxy 或魔法工具**，原生网络秒级连通。彻底告别代码写一半时突然 <code>Timeout</code> 或 <code>404</code> 的抓狂体验。
   </Card>
-  <Card title="先跑通再上工具" icon="heroicons:cursor-arrow-rays">
-    先用在线测试页验证通不通，再去接入 Codex / OpenClaw。
+  <Card title="为 OpenClaw 等插件深度特化" icon="seti:db">
+    完美兼容长文本上下文并发。我们在底层接管并优化了流式 (Stream) 传输结构，专为 IDE 内动辄上万 Tokens 的补全消耗进行**防断联与防吞字优化**。
   </Card>
-  <Card title="遇到问题好排查" icon="heroicons:bug-ant">
-    常见错误集中在排障页，照着一步步查就行。
+  <Card title="打破官价垄断，极致护驾" icon="setting">
+    拒绝用一次痛一次的昂贵账单。提供比官方**极具性价比的阶梯按量计费与包月套餐**。您可以毫无顾忌地将整个项目的几十个文件丢给 AI 进行重构。
+  </Card>
+  <Card title="保姆级零门槛接入" icon="puzzle">
+    支持标准 <code>/chat/completions</code> 及代码专用 <code>/responses</code> 等各式复杂端点。**按照指引替换 Base URL 与 Key 即可全系打通**，卡壳包教会。
   </Card>
 </CardGrid>

@@ -20,7 +20,9 @@ export const onRequest = async (context: PagesContextLike) => {
   if (!supportedLocales.includes(locale)) return await context.next();
 
   url.pathname = `/${locale}/`;
-  const response = Response.redirect(url.toString(), 302);
+  // Cloudflare Workers: `Response.redirect()` returns a response with immutable headers,
+  // so appending `Set-Cookie` would throw `Can't modify immutable headers.`
+  const headers = new Headers({ Location: url.toString() });
 
   if (!cookies[localeCookieName]) {
     const cookieParts = [
@@ -30,8 +32,8 @@ export const onRequest = async (context: PagesContextLike) => {
       "SameSite=Lax",
     ];
     if (url.protocol === "https:") cookieParts.push("Secure");
-    response.headers.append("Set-Cookie", cookieParts.join("; "));
+    headers.append("Set-Cookie", cookieParts.join("; "));
   }
 
-  return response;
+  return new Response(null, { status: 302, headers });
 };
